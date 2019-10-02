@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+    <!-- Has to be in this order: jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    <title>Amazon Price Tracker</title>
+</head>
+
+<body>
+    <!-- to not showing search bar after user entered unavailable product -->
+    {% if product_info != False %}
+    <div class="container-fluid">
+        <form action="{{ url_for('index') }}" method="post">
+            <div class="form-row">
+                <div class="form-group col-12 col-md-8">
+                    <input type="text" class="form-control" placeholder="Amazon product URL or product ID (ASIN)" name="inputProduct">
+                </div>
+                <div class="form-group col-6 col-md-4"><button type="submit" class="btn btn-primary">Search</button></div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    {% if product_info %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <h1>PRODUCT INFO</h1>
+                <p>Name: {{product_info["name"]}}</p>
+                <p>Category: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
+                <p>Rating: {{product_info["rating"]}}</p>
+                <p>#Votes: {{product_info["nVotes"]}}</p>
+                <p>Availability: {{product_info['availability']}}</p>
+                <img src="{{ product_info['imageURL'] }}" alt="Product Image Sample" height="450">
+            </div>
+            <div class="col-12 col-md-8">
+                <h1>PRICE GRAPH</h1>
+                <div id="price_graph"></div>
+            </div>
+        </div>
+    </div>
+    {% elif product_info==False %}
+    <div class="container-fluid">
+        <h1>Sorry, we cannot find your product</h1>
+        <h2>Do you want to keep track of this product?</h2>
+        <div class="col-sm"></div>
+        <div class="col-sm"><button type="button" class="btn btn-outline-success btn-lg btn-block" id="yes-btn">Yes</button></div>
+        <div class="col-sm"><button type="button" class="btn btn-outline-danger btn-lg btn-block" id="no-btn"">No</button></div>
+        <div class="col-sm"></div>
+
+        <div id="div_not_found_product">
+            <h2>Please copy the full URL of the product:</h2>
+            <form action="{{ url_for('add_new_product_from_user') }}" method="post">
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-8">
+                        <input type="text" class="form-control" placeholder="Full Product URL" name="add_product_url">
+                    </div>
+                    <div class="form-group col-6 col-md-4"><button type="submit" class="btn btn-primary">Submit URL</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+</body>
+</html>
