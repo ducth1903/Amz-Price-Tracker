@@ -15,10 +15,10 @@ database_debug = r"..\db\price_tracker_debug.db"
 def index(product_asin=None):
     if request.method == 'GET':
         if not product_asin:
-            return render_template("index.html", product_info=None)
+            return render_template("index.html", product_info=None, price_info=None)
         else:
-            product_info = helper_find_product_info_from_asin(product_asin)
-            return render_template("index.html", product_info=product_info)
+            product_info, price_info = helper_find_product_info_from_asin(product_asin)
+            return render_template("index.html", product_info=product_info, price_info=price_info)
 
     elif request.method == 'POST':
         # search product by URL or by ASIN from database
@@ -46,7 +46,7 @@ def add_new_product_from_user():
         return render_template('add_product.html', product_info=new_product_info)
     else:
         # Go back to home page
-        return redirect(url_for("index", product_asin=None))
+        return redirect(url_for("index", product_asin=None, price_info=None))
 
 
 
@@ -61,11 +61,11 @@ def helper_find_product_info_from_asin(product_asin):
         price_info = db_utils.get_prices(conn, product_asin, colName="asin, price, datetime", returnDict=True)
     else:
         # product not exists in database
-        product_info = False
+        product_info, price_info = False, None
 
     # Close database connection
     db_utils.close_connection(conn)
-    return product_info
+    return product_info, price_info
 
 def helper_add_new_product_from_user(product_url):
     from datetime import datetime

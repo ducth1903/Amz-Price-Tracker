@@ -17,26 +17,31 @@
 
 <body>
     {% if product_info %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6 col-md-4">
-                <h1>PRODUCT INFO</h1>
-                <p>Name: {{product_info["name"]}}</p>
-                <p>Category: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
-                <p>Rating: {{product_info["rating"]}}</p>
-                <p>#Votes: {{product_info["nVotes"]}}</p>
-                <p>Availability: {{product_info['availability']}}</p>
-                <p>Price: ${{product_info['price']}}</p>
-                <img src="{{ product_info['imageURL'] }}" alt="Product Image Sample" height="450">
+    <div class="container">
+        <div class="row m-3 pb-3">
+            <div class="col"></div>
+            <div class="col-12 col-md-8">
+                <h1 style="text-align: center;">PRODUCT INFO</h1>
+                <p><b>Name</b>: {{product_info["name"]}}</p>
+                <p><b>Category</b>: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
+                <p><b>Rating</b>: {{product_info["rating"]}}</p>
+                <p><b>#Votes</b>: {{product_info["nVotes"]}}</p>
+                <p><b>Availability</b>: {{product_info['availability']}}</p>
+                <p><b>Price</b>: ${{product_info['price']}}</p>
+                <a href="{{ product_info['url'] }}">Link to Amazon website</a>
+                <br/><br/>
+                <img src="{{ product_info['imageURL'] }}" class="center" alt="{{ product_info['imageURL'] }}" height="450">
             </div>
+            <div class="col"></div>
         </div>
 
         <!-- Back home button -->
-        <div class="row">
-                <div class="col-sm"><button type="button" class="btn btn-outline-danger btn-lg btn-block" id="back-home-btn"">Home Page</button></div>
-            <div class="col-sm"></div>
-            <div class="col-sm"></div>
-            <div class="col-sm"></div>
+        <div class="row m-1 pb-1">
+            <div class="col"></div>
+            <div class="col-12 col-md-8">
+                <button type="button" class="btn btn-outline-danger btn-lg btn-block" id="back-home-btn"">Home Page</button>
+            </div>
+            <div class="col"></div>
         </div>
     </div>
     {% endif %}

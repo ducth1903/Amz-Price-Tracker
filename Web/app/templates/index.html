@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
     <!-- Has to be in this order: jQuery first, then Popper.js, then Bootstrap JS -->
@@ -12,6 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://kit.fontawesome.com/f06fa8d27a.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
     <title>Amazon Price Tracker</title>
@@ -20,58 +23,200 @@
 <body>
     <!-- to not showing search bar after user entered unavailable product -->
     {% if product_info != False %}
-    <div class="container-fluid">
-        <form action="{{ url_for('index') }}" method="post">
-            <div class="form-row">
-                <div class="form-group col-12 col-md-8">
-                    <input type="text" class="form-control" placeholder="Amazon product URL or product ID (ASIN)" name="inputProduct">
-                </div>
-                <div class="form-group col-6 col-md-4"><button type="submit" class="btn btn-primary">Search</button></div>
-            </div>
-        </form>
-    </div>
-    {% endif %}
-
-    {% if product_info %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6 col-md-4">
-                <h1>PRODUCT INFO</h1>
-                <p>Name: {{product_info["name"]}}</p>
-                <p>Category: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
-                <p>Rating: {{product_info["rating"]}}</p>
-                <p>#Votes: {{product_info["nVotes"]}}</p>
-                <p>Availability: {{product_info['availability']}}</p>
-                <img src="{{ product_info['imageURL'] }}" alt="Product Image Sample" height="450">
-            </div>
-            <div class="col-12 col-md-8">
-                <h1>PRICE GRAPH</h1>
-                <div id="price_graph"></div>
-            </div>
-        </div>
-    </div>
-    {% elif product_info==False %}
-    <div class="container-fluid">
-        <h1>Sorry, we cannot find your product</h1>
-        <h2>Do you want to keep track of this product?</h2>
-        <div class="col-sm"></div>
-        <div class="col-sm"><button type="button" class="btn btn-outline-success btn-lg btn-block" id="yes-btn">Yes</button></div>
-        <div class="col-sm"><button type="button" class="btn btn-outline-danger btn-lg btn-block" id="no-btn"">No</button></div>
-        <div class="col-sm"></div>
-
-        <div id="div_not_found_product">
-            <h2>Please copy the full URL of the product:</h2>
-            <form action="{{ url_for('add_new_product_from_user') }}" method="post">
+    <div class="container" id="search-bar">
+        <div class="m-5 pb-5 jumbotron">
+            <form action="{{ url_for('index') }}" method="post">
                 <div class="form-row">
                     <div class="form-group col-12 col-md-8">
-                        <input type="text" class="form-control" placeholder="Full Product URL" name="add_product_url">
+                        <input type="text" class="form-control form-control-lg" placeholder="Amazon product URL or product ID (ASIN)" name="inputProduct" style="text-align: center;">
                     </div>
-                    <div class="form-group col-6 col-md-4"><button type="submit" class="btn btn-primary">Submit URL</button></div>
+                    <div class="form-group col-6 col-md-4 text-center"><button type="submit" class="btn btn-outline-primary btn-lg">Search</button></div>
                 </div>
             </form>
         </div>
     </div>
     {% endif %}
 
+    {% if product_info %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-md-4 my-auto ml-3">
+                <h1 style="text-align: center;">PRODUCT INFO</h1>
+                <p><b>Name</b>: {{product_info["name"]}}</p>
+                <p><b>Category</b>: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
+                <p style="display:inline;"><b>Rating</b>: <p id="p-product-info-rating" style="display:inline;"></p> ({{product_info["rating"]}}/5.0)</p>
+                <p><b>#Votes</b>: {{product_info["nVotes"]}}</p>
+                <p><b>Availability</b>: {{product_info['availability']}}</p>
+                <a href="{{ product_info['url'] }}">Link to Amazon website</a>
+                <br/><br/>
+                <img src="{{ product_info['imageURL'] }}" alt="{{ product_info['imageURL'] }}" height="450">
+                <br/><br/>
+            </div>
+            <div class="col">
+                <h1 style="text-align: center;">PRICE GRAPH</h1>
+                <br/><br/>
+                <!-- <div id="price_graph" style="text-align: center;"></div> -->
+                <canvas id="price_graph" aria-label="Price Graph" width="400" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    {% elif product_info==False %}
+    <div class="container">
+        <div class="m-5 pb-5">
+            <h1 style="text-align: center;">Sorry, we cannot find your product</h1>
+            <h2 style="text-align: center;">Do you want to keep track of this product?</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm"><button type="button" class="btn btn-outline-success btn-lg btn-block" id="yes-btn">Yes</button></div>
+            <div class="col-sm"><button type="button" class="btn btn-outline-danger btn-lg btn-block" id="no-btn"">No</button></div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="m-5 pb-5">
+            <div id="div_not_found_product">
+                <h2 style="text-align: center;">Please copy the full URL of the product:</h2>
+                <br/>
+                <form action="{{ url_for('add_new_product_from_user') }}" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-8">
+                            <input type="text" class="form-control" placeholder="Full Product URL" name="add_product_url">
+                        </div>
+                        <div class="form-group col-6 col-md-4 text-center"><button type="submit" class="btn btn-outline-primary">Submit URL</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
 </body>
+
+<script>
+$(document).ready(function() {
+    $("#no-btn").click(function() {
+        window.location.href = "{{ url_for('index') }}";
+    });
+
+    $("#yes-btn").click(function() {
+        $("#div_not_found_product").css({'display': 'inline'});
+    });
+
+    // Adding STARs to ratings
+    var product_info = JSON.parse('{{ product_info | tojson | safe }}');
+    var product_info_rating = product_info["rating"];
+    for (var i=1; i<6; i++) {
+        if (i <= product_info_rating) {
+            var solid_star = "<i class='fas fa-star' style='color: #e2e835;'></i>";
+            $("#p-product-info-rating").append(solid_star);
+        } else {
+            var reg_star = "<i class='far fa-star' style='color: #e2e835;'></i>";
+            $("#p-product-info-rating").append(reg_star);
+        }
+    }
+
+    // =======================================================================
+    // ============================= PRICE GRAPH =============================
+    // =======================================================================
+    // ******************************* CHART JS ******************************
+    // parse the date / time
+    var parseTime = d3.timeParse("%d/%m/%Y %H:%M:%S");
+
+    var price_info_obj = JSON.parse('{{ price_info | tojson | safe }}');
+    price_info_obj['datetime'].forEach(function(d, idx) {
+        this[idx] = parseTime(d);       // "this" refers to price_info_obj['datetime'] array itself
+    }, price_info_obj['datetime']);
+
+    // Create data --- has to be in this form
+    // var data = [ {x:10, y:20}, {x:40, y:90}, {x:80, y:50} ]
+    var data = [];
+    for (const [idx,val] of price_info_obj.datetime.entries()) {
+        data.push({"datetime": val});
+    }
+    for (const [idx,val] of price_info_obj.price.entries()) {
+        data[idx]['price'] = val;
+    }
+
+    var ctx = document.getElementById("price_graph").getContext('2d');
+    var price_graph_chart = new Chart(ctx, {
+        type: 'line',
+        data: data
+    });
+
+    // ******************************* D3 JS ******************************
+    /*
+    // parse the date / time
+    var parseTime = d3.timeParse("%d/%m/%Y %H:%M:%S");
+
+    var price_info_obj = JSON.parse('{{ price_info | tojson | safe }}');
+    price_info_obj['datetime'].forEach(function(d, idx) {
+        this[idx] = parseTime(d);       // "this" refers to price_info_obj['datetime'] array itself
+    }, price_info_obj['datetime']);
+
+    // Create data --- has to be in this form
+    // var data = [ {x:10, y:20}, {x:40, y:90}, {x:80, y:50} ]
+    var data = [];
+    for (const [idx,val] of price_info_obj.datetime.entries()) {
+        data.push({"datetime": val});
+    }
+    for (const [idx,val] of price_info_obj.price.entries()) {
+        data[idx]['price'] = val;
+    }
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 20, right: 20, bottom: 100, left: 60},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("#price_graph")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        // translate this svg element to leave some margin
+        .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // X scale
+    var x = d3.scaleTime().range([0, width]);             // this is corresponding value in pixel
+    x.domain(d3.extent(data, function(d) { return d.datetime; }));
+    // Y scale
+    var y = d3.scaleLinear().range([height, 0]);            // this is corresponding value in pixel
+    y.domain([0, d3.max(data, function(d) { return d.price; }) + 10]);
+    // X axis
+    var xAxis = d3.axisBottom(x);
+    // Y axis
+    var yAxis = d3.axisLeft(y);
+
+    var line = d3.line()
+        .x(function(d) { console.log(d.datetime); return x(d.datetime); })
+        .y(function(d) { console.log(d.price); return y(d.price); });
+
+    svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .style("stroke", d3.scaleOrdinal(d3.schemeCategory10)(0))
+        .attr("d", line);
+
+    // Append X Axis
+    svg.append('g')
+        .attr("class", "axis")
+        .attr("transform", "translate(0,"+height+")")
+        .call(xAxis.tickFormat(d3.timeFormat("%Y-%m-%d")))
+        .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+    // Append Y Axis
+    svg.append('g')
+        .attr("class", "axis")
+        .call(yAxis);
+    */
+    // =======================================================================
+    // =======================================================================
+    // =======================================================================
+});
+</script>
+
 </html>

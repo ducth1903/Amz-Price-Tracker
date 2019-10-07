@@ -1,5 +1,7 @@
 # Amazon Price Tracker
 
+Email: amazon.pricetracker2019@gmail.com
+
 (BeautifulSoup/Scrapy + SQLite/MongoDB + Flask)
 
 - SQLite: serverless, lightweight, embedded

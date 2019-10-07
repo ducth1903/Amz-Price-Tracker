@@ -12,12 +12,13 @@ URLs = ["https://www.amazon.com/gp/product/B002C5YKKW",
 # Create database (if not exists)
 # Create connection to database and insert prices and product details into database
 # conn = db_utils.create_connection(db_file=db_utils.database_debug)
-conn = db_utils.create_connection(db_file=db_utils.database)
+conn = db_utils.create_connection(db_file=db_utils.database_debug)
 list_all_tables = db_utils.get_tables(conn)
 if len(list_all_tables)==0:
     print("Initialize tables for the 1st time...")
     db_utils.create_table(conn, db_utils.sql_create_products_table)
     db_utils.create_table(conn, db_utils.sql_create_prices_table)
+    db_utils.create_table(conn, db_utils.sql_create_emails_table)
 # db_utils.drop_table(conn, db_utils.sql_drop_products_table)
 # db_utils.drop_table(conn, db_utils.sql_drop_prices_table)
 

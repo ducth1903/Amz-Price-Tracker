@@ -28,6 +28,12 @@ sql_create_prices_table = """ CREATE TABLE IF NOT EXISTS prices (
                                 FOREIGN KEY (asin) REFERENCES products (asin) ON DELETE RESTRICT
                             ); """
 
+sql_create_emails_table = """ CREATE TABLE IF NOT EXISTS emails (
+                                id integer PRIMARY KEY,
+                                asin text,
+                                userEmail text
+                            ); """
+
 sql_drop_products_table = """ DROP TABLE products; """
 
 sql_drop_prices_table = """ DROP TABLE prices; """
@@ -137,6 +143,23 @@ def delete_product(conn, product_asin):
     c = conn.cursor()
     # c.execute("PRAGMA foreign_keys=ON")
     c.execute(sql, (product_asin,))
+
+def add_user_email(conn, product_asin, user_email):
+    """
+    Function to add user email subscription to a product for price alert
+    """
+    sql_add_user_email = """ INSERT INTO emails(asin, userEmail) VALUES (?, ?); """
+    c = conn.cursor()
+    c.execute(sql_add_user_email, product_asin, user_email)
+
+def alert_user_email(conn, product_asin):
+    """
+    Function to alert subscribed users for price change
+    """
+    c = conn.cursor()
+    c.execute(""" SELECT userEmail from emails WHERE asin="{}"; """.format(product_asin))
+    fetch = c.fetchall()
+    
 
 def db_commit(conn):
     """ IMPORTANT: Need to commit after inserting so result will be updated in database """
