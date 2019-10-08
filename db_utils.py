@@ -1,4 +1,5 @@
 import sqlite3
+import email_msg_utils
 
 database = r".\db\price_tracker.db"
 database_debug = r".\db\price_tracker_debug.db"
@@ -31,7 +32,8 @@ sql_create_prices_table = """ CREATE TABLE IF NOT EXISTS prices (
 sql_create_emails_table = """ CREATE TABLE IF NOT EXISTS emails (
                                 id integer PRIMARY KEY,
                                 asin text,
-                                userEmail text
+                                userEmail text,
+                                FOREIGN KEY (asin) REFERENCES products (asin) ON DELETE RESTRICT
                             ); """
 
 sql_drop_products_table = """ DROP TABLE products; """
@@ -152,14 +154,16 @@ def add_user_email(conn, product_asin, user_email):
     c = conn.cursor()
     c.execute(sql_add_user_email, product_asin, user_email)
 
-def alert_user_email(conn, product_asin):
+def alert_user_email(conn, product_asin, product_name, product_price):
     """
     Function to alert subscribed users for price change
     """
     c = conn.cursor()
+
     c.execute(""" SELECT userEmail from emails WHERE asin="{}"; """.format(product_asin))
-    fetch = c.fetchall()
-    
+    emails = c.fetchall()
+    for email in emails:
+        email_msg_utils.email_alert(email, product_name, product_price)
 
 def db_commit(conn):
     """ IMPORTANT: Need to commit after inserting so result will be updated in database """

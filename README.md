@@ -1,6 +1,6 @@
 # Amazon Price Tracker
 
-Email: amazon.pricetracker2019@gmail.com
+Email: amz.price.tracker.2019@gmail.com
 
 (BeautifulSoup/Scrapy + SQLite/MongoDB + Flask)
 

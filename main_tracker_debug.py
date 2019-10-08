@@ -3,11 +3,10 @@ import db_utils
 from datetime import datetime
 from tqdm import tqdm
 
-URLs = ["https://www.amazon.com/gp/product/B002C5YKKW",
-    "https://www.amazon.com/Apple-AirPods-Charging-Latest-Model/dp/B07PXGQC1Q",
-    "https://www.amazon.com/ESTERA®-Phase-Womens-Maintenance-Formula/dp/B07GFRN5CR", 
-    "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518",
-    "https://www.amazon.com/dp/B07FZ8S74R/ref=ods_gw_ha_h1_d_dt_rain_T2_091619?pf_rd_p=daa98c3e-e685-4054-a905-c92800ab87c5&pf_rd_r=HMNTAQ39BAYK0MY3B4W8"]
+with open("URL_first_time_only.txt", 'r') as f:
+    all_lines = f.readlines()[2:]
+    URLs = [url[:-1] for url in all_lines]
+
 
 # Create database (if not exists)
 # Create connection to database and insert prices and product details into database

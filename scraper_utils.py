@@ -133,6 +133,7 @@ def extract_amazon_url(URL):
 
     if "www.amazon.com" in URL:
         # Convert URL to the shorter URL for better managing
+        if "?ref" in URL: URL = URL.replace("?ref", "/ref")
         URL = URL.split("/ref")[0]
         ASIN = URL.split("/")[-1]
         try:
