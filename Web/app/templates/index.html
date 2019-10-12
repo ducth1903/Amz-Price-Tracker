@@ -49,6 +49,11 @@
                 <p><b>Availability</b>: {{product_info['availability']}}</p>
                 <a href="{{ product_info['url'] }}">Link to Amazon website</a>
                 <br/><br/>
+                <form action="{{ url_for('add_email_alert') }}" method="post">
+                    <input type="text" class="form-control" placeholder="Your Email" name="userEmail">
+                    <button type="submit" class="btn btn-outline-primary">Subscribe</button>
+                </form>
+                <br/><br/>
                 <img src="{{ product_info['imageURL'] }}" alt="{{ product_info['imageURL'] }}" height="450">
                 <br/><br/>
             </div>

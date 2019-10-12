@@ -7,7 +7,6 @@ with open("URL_first_time_only.txt", 'r') as f:
     all_lines = f.readlines()[2:]
     URLs = [url[:-1] for url in all_lines]
 
-
 # Create database (if not exists)
 # Create connection to database and insert prices and product details into database
 # conn = db_utils.create_connection(db_file=db_utils.database_debug)
@@ -38,6 +37,9 @@ for URL in tqdm(URLs):
     curr_time_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     price_details = (details["ASIN"], details["price"], curr_time_str)
     db_utils.insert_price(conn, price_details)
+
+    # Email alert users
+    db_utils.alert_user_email(conn, details["ASIN"], details["name"], details["price"])
 
     # Delete product
     # db_utils.delete_product(conn, details["ASIN"])

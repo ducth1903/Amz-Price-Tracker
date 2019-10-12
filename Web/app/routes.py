@@ -48,7 +48,18 @@ def add_new_product_from_user():
         # Go back to home page
         return redirect(url_for("index", product_asin=None, price_info=None))
 
-
+@app.route('/subscribe', methods=['POST'])
+def add_email_alert():
+    if request.method == 'POST':
+        userEmail = request.form['userEmail']
+        product_asin = request.referrer.split('/')[-1]
+        helper_add_user_email(product_asin, userEmail)
+        product_info, _ = helper_find_product_info_from_asin(product_asin)
+        return render_template("subscribe.html", userEmail=userEmail, product_name=product_info['name'])
+        # return redirect(url_for("index", product_asin=product_asin, user_subscribed=userEmail))
+    else:
+        # Go back to home page
+        return redirect(url_for("index", product_asin=None, price_info=None))
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ################################################## HELPER FUNCTION ##################################################
@@ -90,3 +101,16 @@ def helper_add_new_product_from_user(product_url):
     # Close database connection
     db_utils.close_connection(conn)
     return details, price_details
+
+def helper_add_user_email(product_asin, userEmail):
+    conn = db_utils.create_connection(db_file=database_debug)
+    # try:
+    db_utils.add_user_email(conn, product_asin, userEmail)
+    # except:
+    #     print('cannot add user email...')
+    #     pass
+
+    # Commit insertion
+    db_utils.db_commit(conn)
+    # Close database connection
+    db_utils.close_connection(conn)

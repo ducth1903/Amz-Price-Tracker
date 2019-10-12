@@ -152,7 +152,7 @@ def add_user_email(conn, product_asin, user_email):
     """
     sql_add_user_email = """ INSERT INTO emails(asin, userEmail) VALUES (?, ?); """
     c = conn.cursor()
-    c.execute(sql_add_user_email, product_asin, user_email)
+    c.execute(sql_add_user_email, (product_asin, user_email))
 
 def alert_user_email(conn, product_asin, product_name, product_price):
     """
@@ -163,7 +163,8 @@ def alert_user_email(conn, product_asin, product_name, product_price):
     c.execute(""" SELECT userEmail from emails WHERE asin="{}"; """.format(product_asin))
     emails = c.fetchall()
     for email in emails:
-        email_msg_utils.email_alert(email, product_name, product_price)
+        # email has to be string, not tuple
+        email_msg_utils.email_alert(email[0], product_name, product_price)
 
 def db_commit(conn):
     """ IMPORTANT: Need to commit after inserting so result will be updated in database """
