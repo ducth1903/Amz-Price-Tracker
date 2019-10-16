@@ -10,13 +10,15 @@ Email: amz.price.tracker.2019@gmail.com
   
 - Heroku (deploy):
 
+  <b>git push heroku master</b>
+
   1. Download Heroku CLI (Command Line Interface): to create and manage your Heroku app directly from terminal
 
   2. In terminal: <b>heroku login</b> or <b>heroku login -i</b>
 
   3. Add all dependencies: <b>pip freeze > requirements.txt</b>
 
-  4. Add a Procfile: 
+  4. Add a Procfile:
 
      3.1. Before adding a Procfile, need to install a web server called Gunicorn (pip install gunicorn)
 
