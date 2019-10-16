@@ -8,9 +8,11 @@ Email: amz.price.tracker.2019@gmail.com
   - sqlite3 comes with Python installed
   - DBeaver GUI: universal database system, supporting all major RDBS such as MySQL, PostgreSQL, Oracle, SQL Server, SQLite, ...
   
-- Heroku (deploy):
+- Heroku (deployment): (Heroku uses PostgresSQL as its database)
 
   <b>git push heroku master</b>
+
+  <b>git remote -v</b>
 
   1. Download Heroku CLI (Command Line Interface): to create and manage your Heroku app directly from terminal
 
@@ -22,6 +24,8 @@ Email: amz.price.tracker.2019@gmail.com
 
      3.1. Before adding a Procfile, need to install a web server called Gunicorn (pip install gunicorn)
 
-     3.2. Create a new file Procfile as the name and no extension. Add this: <b>web: gunicorn app:app</b> and <b>release: python db.py db upgrade</b> to populate the table schema from the database migration file into Heroku database
+     3.2. Create a new file Procfile as the name and no extension. 
+
+     Add this: <b>web: gunicorn app:app</b> (app:app specifies the module and application name) and <b>release: python db.py db upgrade</b> to populate the table schema from the database migration file into Heroku database
 
   5. Database: 
