@@ -22,8 +22,6 @@ Email: amz.price.tracker.2019@gmail.com
 
      3.1. Before adding a Procfile, need to install a web server called Gunicorn (pip install gunicorn)
 
-     3.2. Create a new file Procfile as the name and no extension. Add this: <b>web: gunicorn app:app</b> and <b>release: python db.py db upgrade</b> to populate the table schema from the database migration file into Heroku database 
+     3.2. Create a new file Procfile as the name and no extension. Add this: <b>web: gunicorn app:app</b> and <b>release: python db.py db upgrade</b> to populate the table schema from the database migration file into Heroku database
 
-  5. Now we are ready for deployment: heroku create <name-application>. The output will be Heroku git remote repository where our application lives on Heroku. We then have to push our application to the master branch.
-
-  6. Database: 
+  5. Database: 
