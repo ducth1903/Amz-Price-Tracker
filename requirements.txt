@@ -1,8 +1,5 @@
 absl-py==0.7.1
 alabaster==0.7.12
-anaconda-client==1.7.2
-anaconda-navigator==1.9.7
-anaconda-project==0.8.2
 asn1crypto==0.24.0
 astor==0.8.0
 astroid==2.2.5
@@ -77,15 +74,6 @@ Jinja2==2.10.1
 jmespath==0.9.4
 joblib==0.13.2
 jsonschema==3.0.1
-jupyter==1.0.0
-jupyter-client==5.2.4
-jupyter-console==6.0.0
-jupyter-core==4.4.0
-jupyterlab==0.35.4
-jupyterlab-server==0.2.0
-Keras==2.2.4
-Keras-Applications==1.0.7
-Keras-Preprocessing==1.0.9
 keyring==18.0.0
 kiwisolver==1.1.0
 lazy-object-proxy==1.4.1
@@ -226,8 +214,6 @@ win-inet-pton==1.1.0
 win-unicode-console==0.5
 wincertstore==0.2
 wrapt==1.11.1
-xlrd==1.2.0
-XlsxWriter==1.1.8
 xlwings==0.15.8
 xlwt==1.3.0
 zict==0.1.4
