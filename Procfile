@@ -1,1 +1,1 @@
-web: gunicorn Web:app
+web: gunicorn amz-price-tracker/Web:app

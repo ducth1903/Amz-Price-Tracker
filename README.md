@@ -8,7 +8,7 @@ Email: amz.price.tracker.2019@gmail.com
   - sqlite3 comes with Python installed
   - DBeaver GUI: universal database system, supporting all major RDBS such as MySQL, PostgreSQL, Oracle, SQL Server, SQLite, ...
   
-- Heroku (deployment): (Heroku uses PostgresSQL as its database)
+- Heroku (deployment): (Heroku uses Postgres as its database)
 
   <b>git push heroku master</b>
 
@@ -20,7 +20,7 @@ Email: amz.price.tracker.2019@gmail.com
 
   3. Add all dependencies: <b>pip freeze > requirements.txt</b>
 
-  4. Add a Procfile:
+  4. Add a Procfile: (so as Heroku knows how to execute the application)
 
      3.1. Before adding a Procfile, need to install a web server called Gunicorn (pip install gunicorn)
 
