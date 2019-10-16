@@ -26,8 +26,12 @@ def price_tracker_job():
         URLs = [url[0] for url in db_utils.get_products(conn, colName="url")]
     
     for URL in tqdm(URLs):
-        # Request HTML response from the page and extract info from it
-        details = scraper_utils.extract_amazon_url(URL)
+        try:
+            # Request HTML response from the page and extract info from it
+            details = scraper_utils.extract_amazon_url(URL)
+        except:
+            print("Cannot scrape URL: {}".format(URL))
+            continue
 
         if isFirstTime:
             # Insert data into products -> (asin, name, deal, url)

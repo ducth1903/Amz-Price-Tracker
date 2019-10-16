@@ -51,7 +51,7 @@
 <script>
 $(document).ready(function() {
     $("#back-home-btn").click(function() {
-        window.location.href = "http://127.0.0.1:5000/";
+        window.location.href = "{{ url_for('index') }}";
     });
 });
 </script>

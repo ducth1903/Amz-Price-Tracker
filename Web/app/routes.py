@@ -7,8 +7,11 @@ sys.path.append("../")
 import db_utils
 from scraper_utils import extract_amazon_url
 
-database = r"..\db\price_tracker.db"
-database_debug = r"..\db\price_tracker_debug.db"
+isDebug = True
+if isDebug:
+    database = r"..\db\price_tracker_debug.db"
+else:
+    database = r"..\db\price_tracker.db"
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<product_asin>', methods=['GET', 'POST'])
@@ -23,7 +26,7 @@ def index(product_asin=None):
     elif request.method == 'POST':
         # search product by URL or by ASIN from database
         inputProduct = request.form['inputProduct']
-        conn = db_utils.create_connection(db_file=database_debug)
+        conn = db_utils.create_connection(db_file=database)
         if "https://www.amazon.com" in inputProduct:
             # Extract ASIN id from URL
             URL = inputProduct.split("/ref")[0]
@@ -65,7 +68,7 @@ def add_email_alert():
 ################################################## HELPER FUNCTION ##################################################
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 def helper_find_product_info_from_asin(product_asin):
-    conn = db_utils.create_connection(db_file=database_debug)
+    conn = db_utils.create_connection(db_file=database)
     product_info = db_utils.get_products(conn, colName="*", cond=product_asin, returnDict=True)
     if product_info:
         # only get price if product exists in database
@@ -82,7 +85,7 @@ def helper_add_new_product_from_user(product_url):
     from datetime import datetime
 
     details = extract_amazon_url(product_url)
-    conn = db_utils.create_connection(db_file=database_debug)
+    conn = db_utils.create_connection(db_file=database)
     # Insert data into products -> (asin, name, deal, url)
     try:
         product_details = (details["ASIN"], details["name"], int(details["isDeal"]), \
@@ -103,7 +106,7 @@ def helper_add_new_product_from_user(product_url):
     return details, price_details
 
 def helper_add_user_email(product_asin, userEmail):
-    conn = db_utils.create_connection(db_file=database_debug)
+    conn = db_utils.create_connection(db_file=database)
     # try:
     db_utils.add_user_email(conn, product_asin, userEmail)
     # except:

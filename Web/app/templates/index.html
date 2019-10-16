@@ -28,7 +28,7 @@
             <form action="{{ url_for('index') }}" method="post">
                 <div class="form-row">
                     <div class="form-group col-12 col-md-8">
-                        <input type="text" class="form-control form-control-lg" placeholder="Amazon product URL or product ID (ASIN)" name="inputProduct" style="text-align: center;">
+                        <input type="text" class="form-control form-control-lg" placeholder="Amazon product URL or product ID" name="inputProduct" style="text-align: center;">
                     </div>
                     <div class="form-group col-6 col-md-4 text-center"><button type="submit" class="btn btn-outline-primary btn-lg">Search</button></div>
                 </div>
@@ -49,9 +49,13 @@
                 <p><b>Availability</b>: {{product_info['availability']}}</p>
                 <a href="{{ product_info['url'] }}">Link to Amazon website</a>
                 <br/><br/>
-                <form action="{{ url_for('add_email_alert') }}" method="post">
-                    <input type="text" class="form-control" placeholder="Your Email" name="userEmail">
-                    <button type="submit" class="btn btn-outline-primary">Subscribe</button>
+                <form action="{{ url_for('add_email_alert') }}" method="post" class="form-row">
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Your Email" name="userEmail">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-primary">Subscribe</button>
+                    </div>
                 </form>
                 <br/><br/>
                 <img src="{{ product_info['imageURL'] }}" alt="{{ product_info['imageURL'] }}" height="450">
@@ -97,6 +101,8 @@
 </body>
 
 <script>
+// REFERENCE: https://www.d3-graph-gallery.com/index.html
+
 $(document).ready(function() {
     $("#no-btn").click(function() {
         window.location.href = "{{ url_for('index') }}";
@@ -225,35 +231,6 @@ $(document).ready(function() {
         .on("end", updateChart)                // Each time the brush selection changes, trigger the 'updateChart' function
 
     // ---------------------------------------------------------------------------------
-    // Tooltip
-    var toolTip = d3.select("#price_graph")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0)
-        // .style("background-color", "white")
-        // .style("border", "solid")
-        // .style("border-width", "2px")
-        // .style("border-radius", "5px")
-        // .style("padding", "5px")
-    
-    var mouseover = function(d) {
-        console.log(d.price);
-        toolTip.transition()		
-                .duration(200)		
-                .style("opacity", .9);
-
-        toolTip.html("Date: "+d.datetime+"<br/>"+"Price: $"+d.price)
-            .style("left", (d3.event.pageX)+"px")
-            .style("top", (d3.event.pageY - 30)+"px");
-    }
-
-    var mouseout = function(d) {
-        toolTip.transition()		
-            .duration(500)		
-            .style("opacity", 0);
-    }
-
-    // ---------------------------------------------------------------------------------
     var line = d3.line()
         .x(function(d) { return x(d.datetime); })
         .y(function(d) { return y(d.price); });
@@ -261,23 +238,21 @@ $(document).ready(function() {
     line_brush.append("path")
             .datum(data)
             .attr("class", "line")
-            .style("stroke", "steelblue")
+            .attr("stroke", "steelblue")
             .attr("stroke-width", 2)
             .attr("d", line);
-    
+
     line_brush.append("g")
-            .selectAll("dot")
+            .selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
-                .attr("cx", function(d) {return x(d.datetime)})
-                .attr("cy", function(d) {return y(d.price)})
-                .attr("r", 6)
-                .attr("fill", "steelblue")
-                .on("mouseover", mouseover)
-                .on("mouseout", mouseout);
+                .attr("cx", function (d) {return x(d.datetime);})
+                .attr("cy", function(d) {return y(d.price);})
+                .attr("r", 8)
+                .style("fill", "steelblue")
 
-    line_brush.append('g').attr("class", "brush").call(brush);
+    line_brush.append("g").attr("class", "brush").call(brush);
 
     // ---------------------------------------------------------------------------------
     // A function that set idleTimeOut to null
@@ -287,7 +262,7 @@ $(document).ready(function() {
     // A function that update the chart for given boundaries
     function updateChart() {
         // What are the selected boundaries?
-        extent = d3.event.selection;
+        extent = d3.event.selection;        // brush coordinates
 
         // If no selection, back to initial coordinate. Otherwise, update X axis domain
         if(!extent) {
@@ -298,21 +273,38 @@ $(document).ready(function() {
             line_brush.select(".brush").call(brush.move, null);            // This remove the grey brush area as soon as the selection has been done
         }
 
-        // Update axis and line position
+        // Update axis
         xAxis.transition().duration(1000).call(d3.axisBottom(x));
+        // Update line position
         line_brush.select('.line')
             .transition()
             .duration(1000)
             .attr("d", line);
+
+        // Update circle position
+        line_brush.selectAll("circle")
+            .transition()
+            .duration(1000)
+            .attr("cx", function(d) { return x(d.datetime); })
+            .attr("cy", function(d) { return y(d.price); })
     }
+
     // ---------------------------------------------------------------------------------
     // If user double click, reinitialize the chart
     svg.on("dblclick", function() {
         x.domain(d3.extent(data, function(d) { return d.datetime; }));
         xAxis.transition().call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")));
+        
+        // Reset line
         line_brush.select('.line')
             .transition()
             .attr("d", line);
+
+        // Reset scattered circles
+        line_brush.selectAll("circle")
+            .transition()
+            .attr("cx", function (d) {return x(d.datetime);})
+            .attr("cy", function(d) {return y(d.price);});
     });
     // =======================================================================
     // =======================================================================
