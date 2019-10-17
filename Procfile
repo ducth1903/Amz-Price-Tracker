@@ -1,1 +1,1 @@
-web: gunicorn Web/flask_main:app
+web: gunicorn amz-price-tracker/Web/flask_main:app
