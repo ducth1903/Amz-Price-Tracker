@@ -1,8 +1,8 @@
 import sqlite3
 import email_msg_utils
 
-database = r".\db\price_tracker.db"
-database_debug = r".\db\price_tracker_debug.db"
+database = r"./db/price_tracker.db"
+database_debug = r"./db/price_tracker_debug.db"
 
 # Parent table, asin is the parent key
 sql_create_products_table = """ CREATE TABLE IF NOT EXISTS products (

@@ -9,9 +9,9 @@ from scraper_utils import extract_amazon_url
 
 isDebug = True
 if isDebug:
-    database = r"..\db\price_tracker_debug.db"
+    database = r"./db/price_tracker_debug.db"
 else:
-    database = r"..\db\price_tracker.db"
+    database = r"./db/price_tracker.db"
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<product_asin>', methods=['GET', 'POST'])
