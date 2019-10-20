@@ -1,17 +1,21 @@
 from flask import render_template, jsonify, request
 from flask import redirect, url_for
-from app import app
+from Web_app import app
 import sys
 
-sys.path.append("../")
+# This script is called from run.py from the root directory
+# Thus we need to append path with respect to the root directory
+sys.path.append("./Database")
 import db_utils
+
+sys.path.append("./Scraper")
 from scraper_utils import extract_amazon_url
 
 isDebug = True
 if isDebug:
-    database = r"./db/price_tracker_debug.db"
+    database = db_utils.database_debug
 else:
-    database = r"./db/price_tracker.db"
+    database = db_utils.database
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<product_asin>', methods=['GET', 'POST'])
