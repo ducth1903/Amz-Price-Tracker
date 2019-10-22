@@ -1,0 +1,3 @@
+# Don't track these following files
+.env
+__pycache__/

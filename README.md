@@ -4,16 +4,16 @@ Email: amz.price.tracker.2019@gmail.com
 
 (BeautifulSoup/Scrapy + SQLite for dev and PostgresSQL for production + Flask)
 
-Ref:
-
 - Flask-Migrate explained: http://www.patricksoftwareblog.com/relational-database-migrations-using-flask-migrate/
-
-  
 
 - SQLite: serverless, lightweight, embedded
   - sqlite3 comes with Python installed
   - DBeaver GUI: universal database system, supporting all major RDBS such as MySQL, PostgreSQL, Oracle, SQL Server, SQLite, ...
   
+- .env: to store private key; .flaskenv: to store public key. The whole idea is instead of running "export ..." for each machine that runs the app, these files will configure the environment variables to run the app. **Make sure the .env file is not committed to Git as it is not supposed to be shared...**
+
+  ---
+
 - Heroku (deployment): (Heroku uses Postgres as its database)
 
   <b>git push heroku master</b>

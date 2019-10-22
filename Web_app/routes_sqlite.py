@@ -3,16 +3,19 @@ from flask import redirect, url_for
 from Web_app import app
 import sys
 
-sys.path.append("..")           # root directory
-import file_path
-
 # This script is called from run.py from the root directory
 # Thus we need to append path with respect to the root directory
-sys.path.append(file_path.database_dir)
+sys.path.append("./Database")
 import db_utils
 
-sys.path.append(file_path.scraper_dir)
+sys.path.append("./Scraper")
 from scraper_utils import extract_amazon_url
+
+isDebug = True
+if isDebug:
+    database = db_utils.database_debug
+else:
+    database = db_utils.database
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<product_asin>', methods=['GET', 'POST'])
@@ -27,6 +30,7 @@ def index(product_asin=None):
     elif request.method == 'POST':
         # search product by URL or by ASIN from database
         inputProduct = request.form['inputProduct']
+        conn = db_utils.create_connection(db_file=database)
         if "https://www.amazon.com" in inputProduct:
             # Extract ASIN id from URL
             URL = inputProduct.split("/ref")[0]
@@ -68,34 +72,52 @@ def add_email_alert():
 ################################################## HELPER FUNCTION ##################################################
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 def helper_find_product_info_from_asin(product_asin):
-    product_info = db_utils.get_product_from_asin(product_asin)
+    conn = db_utils.create_connection(db_file=database)
+    product_info = db_utils.get_products(conn, colName="*", cond=product_asin, returnDict=True)
     if product_info:
         # only get price if product exists in database
-        price_info = db_utils.get_price_from_asin(product_asin)
+        price_info = db_utils.get_prices(conn, product_asin, colName="asin, price, datetime", returnDict=True)
     else:
         # product not exists in database
         product_info, price_info = False, None
+
+    # Close database connection
+    db_utils.close_connection(conn)
     return product_info, price_info
 
 def helper_add_new_product_from_user(product_url):
     from datetime import datetime
 
     details = extract_amazon_url(product_url)
-
+    conn = db_utils.create_connection(db_file=database)
+    # Insert data into products -> (asin, name, deal, url)
     try:
         product_details = (details["ASIN"], details["name"], int(details["isDeal"]), \
             details["cat1"], details["cat2"], details["rating"], details["nVotes"], \
             details["availability"], details["imageURL"], details["url"])
-        db_utils.insert_product(product_details)
+        db_utils.insert_product(conn, product_details)
     except:
         pass
-
     # Insert data into prices -> (asin, price, datetime)
-    curr_time = datetime.now()
-    price_details = (details["ASIN"], details["price"], curr_time)
-    db_utils.insert_price(price_details)
+    curr_time_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    price_details = (details["ASIN"], details["price"], curr_time_str)
+    db_utils.insert_price(conn, price_details)
 
+    # Commit insertion
+    db_utils.db_commit(conn)
+    # Close database connection
+    db_utils.close_connection(conn)
     return details, price_details
 
 def helper_add_user_email(product_asin, userEmail):
-    db_utils.add_user_email(product_asin, userEmail)
+    conn = db_utils.create_connection(db_file=database)
+    # try:
+    db_utils.add_user_email(conn, product_asin, userEmail)
+    # except:
+    #     print('cannot add user email...')
+    #     pass
+
+    # Commit insertion
+    db_utils.db_commit(conn)
+    # Close database connection
+    db_utils.close_connection(conn)
