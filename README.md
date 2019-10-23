@@ -12,6 +12,8 @@ Email: amz.price.tracker.2019@gmail.com
   
 - .env: to store private key; .flaskenv: to store public key. The whole idea is instead of running "export ..." for each machine that runs the app, these files will configure the environment variables to run the app. **Make sure the .env file is not committed to Git as it is not supposed to be shared...**
 
+- Note: Database schema needs to be created before running the web (i.e. db.create_all())
+
   ---
 
 - Heroku (deployment): (Heroku uses Postgres as its database)
@@ -38,6 +40,12 @@ Email: amz.price.tracker.2019@gmail.com
 
      <b>web: gunicorn app:app</b> (app:app specifies the module and application name; the first 'app' is the name of the script that launches Flask, i.e. app.run()) **(NOTE: script to launch Flask has to be at the root directory)**, and 
 
-     <b>release: python db.py db upgrade</b> to populate the table schema from the database migration file into Heroku database
+     <b>release: python db.py db upgrade</b>.  The command *db upgrade* populates the table schema from the database migration file into Heroku database
 
-  5. Database: 
+  5. **Migrate**:
+
+     1. python manage.py db init: create migrations folder 
+     2. python manage.py db migrate
+     3. python manage.py db upgrade
+
+     

@@ -1,9 +1,26 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import file_path
+import sys
+
+sys.path.append(file_path.web_app_dir)
+from config import *
 
 app = Flask(__name__)
-config_file = 'settings.py'
-app.config.from_pyfile(config_file)
+if os.environ.get("DATABASE_URL"):
+    """
+    Production env
+    """
+    app.config.from_object(ProductionConfig())
+else:
+    """
+    Development env
+    """
+    print("...Development stage...")
+    app.config.from_object(DevelopmentConfig())
+# config_file = 'config.py'
+# app.config.from_pyfile(config_file)
+
 db = SQLAlchemy(app)
 
 from Web_app import routes
