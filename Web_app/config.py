@@ -3,13 +3,15 @@ These settings will be loaded in __ini__() when we define the app
 '''
 import os
 from dotenv import load_dotenv
+database_local_file = "test.db"
+
+# Actual path to this file
+my_dir = os.path.dirname(os.path.realpath(__file__))
+database_path = os.path.join(my_dir, r"../Database", database_local_file)
 
 # Load env variables
 load_dotenv()
-# SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-# SECRET_KEY = os.environ.get("SECRET_KEY")
-# CACHE_TYPE = "null"
-# SQLALCHEMY_TRACK_MODIFICATIONS = False            
+# SECRET_KEY = os.environ.get("SECRET_KEY")        
 
 class BaseConfig:
     """
@@ -23,7 +25,7 @@ class DevelopmentConfig(BaseConfig):
     """
     Development configuration
     """
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///C:\Code\Flask\Price_Tracker\Database\test.db"
+    SQLALCHEMY_DATABASE_URI = r"sqlite:///{}".format(database_path)
 
 class ProductionConfig(BaseConfig):
     """
