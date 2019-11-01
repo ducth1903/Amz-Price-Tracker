@@ -7,6 +7,7 @@ from Web_app import db
 asin_length_limit = 10
 
 class Products(db.Model):
+    __tablename__ = "products"
     __table_args__ = {'extend_existing': True}
 
     asin = db.Column(db.String(asin_length_limit), primary_key=True)
@@ -20,8 +21,8 @@ class Products(db.Model):
     imageURL = db.Column(db.Text)
     url = db.Column(db.Text, nullable=False)
 
-    prices = db.relationship("Prices", backref="product", lazy=True)
-    emails = db.relationship("Emails", backref="product", lazy=True)
+    # prices = db.relationship("Prices", backref="product", lazy=True)
+    # emails = db.relationship("Emails", backref="product", lazy=True)
 
     def __repr__(self):
         # how object print when printing it out
@@ -34,6 +35,7 @@ class Products(db.Model):
             "imageURL": self.imageURL, "url": self.url}
 
 class Prices(db.Model):
+    __tablename__ = "prices"
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
@@ -48,6 +50,7 @@ class Prices(db.Model):
         return self.datetime.strftime("%d/%m/%Y %H:%M:%S")
 
 class Emails(db.Model):
+    __tablename__ = "emails"
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)

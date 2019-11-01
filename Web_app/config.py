@@ -25,7 +25,10 @@ class DevelopmentConfig(BaseConfig):
     """
     Development configuration
     """
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///{}".format(database_path)
+    # SQLALCHEMY_DATABASE_URI = r"sqlite:///{}".format(database_path)
+    # SQLALCHEMY_DATABASE_URI = r"postgresql://postgres:postgres@localhost:5432/price_tracker"
+    SQLALCHEMY_DATABASE_URI = r"postgresql://postgres:postgres@localhost/price_tracker"
+    # SECRET_KEY = "postgres"
 
 class ProductionConfig(BaseConfig):
     """

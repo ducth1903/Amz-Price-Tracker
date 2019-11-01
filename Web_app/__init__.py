@@ -18,12 +18,14 @@ else:
     """
     print("...Development stage...")
     app.config.from_object(DevelopmentConfig())
-# config_file = 'config.py'
-# app.config.from_pyfile(config_file)
+    print('...init...', app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = SQLAlchemy(app)
 
 from Web_app import routes
+from Web_app.commands import create_tables, drop_tables
+app.cli.add_command(create_tables)
+app.cli.add_command(drop_tables)
 
 # Initialize database once
 # The database will be created if not there

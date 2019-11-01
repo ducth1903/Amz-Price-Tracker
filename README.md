@@ -2,7 +2,16 @@
 
 Email: amz.price.tracker.2019@gmail.com
 
-(BeautifulSoup/Scrapy + SQLite for dev and PostgresSQL for production + Flask)
+(BeautifulSoup/Scrapy + SQLite for initial dev, but then switch to PostgreSQL for local dev and PostgreSQL for production + Flask)
+
+To run the app:
+
+- Make sure PostgreSQL database is created in your system (i.e. locally, use DBeaver to create db), then type: **flask create_tables** to create tables (schema) for databases (i.e. products, prices, emails). This is implemented from Web_app/commands.py. Normally, we need to create from cmd by importing db and models, then db.create_all(). *Note: before doing this, we may need to manually **create database <name_db>** from postgresql cmd*
+- **flask run** or **python run.py**: to run the web app
+- **python main_tracker.py**: to run the scraping
+- **NOTE**: Error in db_utils ("Multiple classes on path..."). To solve this, comment out the db.relationship() portions in db_utils as these only use when initializing relationship of tables.
+
+---
 
 - Flask-Migrate explained: http://www.patricksoftwareblog.com/relational-database-migrations-using-flask-migrate/
 
@@ -12,9 +21,12 @@ Email: amz.price.tracker.2019@gmail.com
   
 - .env: to store private key; .flaskenv: to store public key. The whole idea is instead of running "export ..." for each machine that runs the app, these files will configure the environment variables to run the app. **Make sure the .env file is not committed to Git as it is not supposed to be shared...**
 
-- Note: Database schema needs to be created before running the web (i.e. db.create_all())
-
   ---
+
+- PostgreSQL (installed locally): pass is postgres
+
+  - pgAdmin
+  - psql command line
 
 - Heroku (deployment): (Heroku uses Postgres as its database)
 
@@ -42,7 +54,7 @@ Email: amz.price.tracker.2019@gmail.com
 
      <b>release: python db.py db upgrade</b>.  The command *db upgrade* populates the table schema from the database migration file into Heroku database
 
-  5. **Migrate**:
+  5. **Migrate**: (to update database's schema in the future)
 
      1. python manage.py db init: create migrations folder 
      2. python manage.py db migrate
