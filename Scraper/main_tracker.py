@@ -33,8 +33,11 @@ def price_tracker_job():
 
         # Email alert users
         db_utils.alert_user_email(details["ASIN"], details["name"], details["price"])
+    
+    print("...finish tracking for {}...".format(datetime.now()))
 
 if __name__ == "__main__":
+    print("...start tracker...")
     # price_tracker_job()
     schedule.every().day.at("06:00").do(price_tracker_job)
 
