@@ -10,6 +10,10 @@ To run the app:
 - **flask run** or **python run.py**: to run the web app
 - **python main_tracker.py**: to run the scraping
 - **NOTE**: Error in db_utils ("Multiple classes on path..."). To solve this, comment out the db.relationship() portions in db_utils as these only use when initializing relationship of tables.
+- To run script on Heroku:
+  - Add **worker: python <path-to-script>** on Procfile
+  - Commit and push to Heroku
+  - Type this in local command line: **heroku ps:scale worker=1**
 
 ---
 
