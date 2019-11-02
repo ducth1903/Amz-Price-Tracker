@@ -36,6 +36,8 @@ To run the app:
 
   <b>heroku open; heroku ps</b>
 
+  **heroku run bash**: to run bash on heroku server from local machine
+
   1. Download Heroku CLI (Command Line Interface): to create and manage your Heroku app directly from terminal
 
   2. In terminal: <b>heroku login</b> or <b>heroku login -i</b>
@@ -55,9 +57,9 @@ To run the app:
      <b>release: python db.py db upgrade</b>.  The command *db upgrade* populates the table schema from the database migration file into Heroku database
 
   5. **Migrate**: (to update database's schema in the future)
-
+  
      1. python manage.py db init: create migrations folder 
-     2. python manage.py db migrate
+   2. python manage.py db migrate
      3. python manage.py db upgrade
-
+  
      

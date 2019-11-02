@@ -3,9 +3,13 @@ from datetime import datetime
 import schedule
 import time
 from tqdm import tqdm
-import sys
+import sys, os
 
-sys.path.append("..")                   # root directory
+# Actual path to this file
+my_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.join(my_dir, r"../")
+
+sys.path.append(root_dir)               # root directory
 import file_path
 
 sys.path.append(file_path.database_dir)
@@ -31,9 +35,10 @@ def price_tracker_job():
         db_utils.alert_user_email(details["ASIN"], details["name"], details["price"])
 
 if __name__ == "__main__":
+    print("hello from main_tracker.py")
     # price_tracker_job()
-    schedule.every().day.at("06:00").do(price_tracker_job)
+    # schedule.every().day.at("06:00").do(price_tracker_job)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)

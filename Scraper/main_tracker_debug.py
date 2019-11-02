@@ -1,15 +1,19 @@
 import scraper_utils
 from datetime import datetime
 from tqdm import tqdm
-import sys
+import sys, os
 
-sys.path.append("..")               # root directory
+# Actual path to this file
+my_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.join(my_dir, r"../")
+
+sys.path.append(root_dir)               # root directory
 import file_path
 
 sys.path.append(file_path.database_dir)
 import db_utils
 
-with open("URL_first_time_only.txt", 'r') as f:
+with open(os.path.join(my_dir, "URL_first_time_only.txt"), 'r') as f:
     all_lines = f.readlines()[2:]
     URLs = [url[:-1] for url in all_lines]
 

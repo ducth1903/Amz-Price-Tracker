@@ -18,7 +18,7 @@ else:
     """
     print("...Development stage...")
     app.config.from_object(DevelopmentConfig())
-    print('...init...', app.config['SQLALCHEMY_DATABASE_URI'])
+    # print('...init...', app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = SQLAlchemy(app)
 
