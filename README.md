@@ -13,7 +13,7 @@ To run the app:
 - To run script on Heroku:
   - Add **worker: python <path-to-script>** on Procfile
   - Commit and push to Heroku
-  - Type this in local command line: **heroku ps:scale worker=1**
+  - Type this in local command line: **heroku ps:scale worker=1** (only need to do once at first)
 
 ---
 
@@ -38,7 +38,7 @@ To run the app:
 
   <b>git remote -v</b>
 
-  <b>heroku open; heroku ps</b>
+  <b>heroku open; heroku ps</b> (check dyno hours on Heroku)
 
   **heroku run bash**: to run bash on heroku server from local machine
 
