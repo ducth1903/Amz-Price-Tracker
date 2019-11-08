@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
@@ -40,13 +40,15 @@
     {% if product_info %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 col-md-4 my-auto ml-3">
+            <!-- <div class="col-xs-6 col-md-4 my-auto ml-3"> -->
+            <div class="col-xs-6 col-md-4">
                 <h1 style="text-align: center;">PRODUCT INFO</h1>
                 <p><b>Name</b>: {{product_info["name"]}}</p>
                 <p><b>Category</b>: {{product_info["cat1"]}} - {{product_info["cat2"]}}</p>
                 <p style="display:inline;"><b>Rating</b>: <p id="p-product-info-rating" style="display:inline;"></p> ({{product_info["rating"]}}/5.0)</p>
                 <p><b>#Votes</b>: {{product_info["nVotes"]}}</p>
                 <p><b>Availability</b>: {{product_info['availability']}}</p>
+                <p style="display:inline;"><b>Price</b>: $<p id="latest-price" style="display:inline;"></p></p>
                 <a href="{{ product_info['url'] }}">Link to Amazon website</a>
                 <br/><br/>
                 <form action="{{ url_for('add_email_alert') }}" method="post" class="form-row">
@@ -61,7 +63,7 @@
                 <img src="{{ product_info['imageURL'] }}" alt="{{ product_info['imageURL'] }}" height="450">
                 <br/><br/>
             </div>
-            <div class="col">
+            <div class="col-xs-12 col-sm-6 col-md-8">
                 <h1 style="text-align: center;">PRICE GRAPH</h1>
                 <br/><br/>
                 <div id="price_graph" style="text-align: center;"></div>
@@ -174,6 +176,9 @@ $(document).ready(function() {
         data[idx]['price'] = val;
     }
     
+    // Set latest-price
+    document.getElementById("latest-price").innerHTML = data[data.length-1]['price'];
+
     // ---------------------------------------------------------------------------------
     // set the dimensions and margins of the graph
     var margin = {top: 20, right: 20, bottom: 100, left: 60},
