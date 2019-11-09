@@ -125,8 +125,11 @@ def extract_amazon_url(URL):
 
     # NOTE: It is essential to specify headers so that it makes requests seem to be coming from a browser, not a script
     # otherwise, will be prevented by CAPTCHA
+    # headers = {
+    #     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+    #     "content-type":"text"
+    # }
     headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
         "content-type":"text"
     }
     details = {"ASIN": "", "name": "", "price": "", "isDeal": False, "cat1": "", "cat2": "", "rating": 0.0, "nVotes": 0, "availability": "", "imageURL": "", "url": ""}
