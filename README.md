@@ -14,6 +14,7 @@ To run the app:
   - Add **worker: python <path-to-script>** on Procfile
   - Commit and push to Heroku
   - Type this in local command line: **heroku ps:scale worker=1** (only need to do once at first)
+- To run debug locally: app.run(host='0.0.0.0') then python run.py and access with machine's IP address. Otherwise, in production, app.run(), type flask run
 
 ---
 

@@ -165,5 +165,6 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Philips-Norelco-AT830-46-Frustration/dp/B00JITDVD2"
     # test_url = "https://www.amazon.com/gp/product/B01GNO3G48/ref=ox_sc_act_title_1?smid=A2WMOX0U6VUJ6J&psc=1"
     # test_url = "https://www.amazon.com/dp/B07FZ8S74R/ref=ods_gw_ha_h1_d_dt_rain_T2_091619?pf_rd_p=daa98c3e-e685-4054-a905-c92800ab87c5&pf_rd_r=HMNTAQ39BAYK0MY3B4W8"
-    test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
+    # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
+    test_url = "https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N?ref_=ast_sto_dp"
     print(extract_amazon_url(test_url))

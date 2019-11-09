@@ -29,6 +29,7 @@ def index(product_asin=None):
         inputProduct = request.form['inputProduct']
         if "https://www.amazon.com" in inputProduct:
             # Extract ASIN id from URL
+            if "?ref" in inputProduct: inputProduct = inputProduct.replace("?ref", "/ref")
             URL = inputProduct.split("/ref")[0]
             product_asin = URL.split("/")[-1]
         else:
