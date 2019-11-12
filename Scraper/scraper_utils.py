@@ -125,11 +125,8 @@ def extract_amazon_url(URL):
 
     # NOTE: It is essential to specify headers so that it makes requests seem to be coming from a browser, not a script
     # otherwise, will be prevented by CAPTCHA
-    # headers = {
-    #     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
-    #     "content-type":"text"
-    # }
     headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
         "content-type":"text"
     }
     details = {"ASIN": "", "name": "", "price": "", "isDeal": False, "cat1": "", "cat2": "", "rating": 0.0, "nVotes": 0, "availability": "", "imageURL": "", "url": ""}
@@ -139,10 +136,27 @@ def extract_amazon_url(URL):
         if "?ref" in URL: URL = URL.replace("?ref", "/ref")
         URL = URL.split("/ref")[0]
         ASIN = URL.split("/")[-1]
-        try:
-            page = requests.get(URL, headers=headers)
-        except:
+        page = requests.get(URL, headers=headers)
+        print(f"Page response with {page.status_code}!")
+
+        # ''' page.status_code should be 200 (valid page); 503 means CAPTCHA'''
+        if page.status_code==200:
+            # VALID RESPONSE
+            pass
+        elif page.status_code==404:
+            # INVALID URL
             raise Exception("The requested page is not valid...")
+        elif page.status_code==503:
+            # CAPTCHA RESPONSE
+            proxies = get_proxies()                
+            for proxy in proxies:
+                try:
+                    page = requests.get(URL, headers=headers, proxies={"https" : proxy, "http" : proxy}, timeout=1)
+                except:
+                    continue
+                if page.status_code == 200:
+                    break            
+
         soup = BeautifulSoup(page.content, "lxml")
         curr_prod = ProductAmz(soup)
         
@@ -158,10 +172,30 @@ def extract_amazon_url(URL):
         details["imageURL"] = curr_prod.getImageURL()
         details["url"] = URL
     else:
-        assert "Please enter Amazon link only"
+        print("Please enter Amazon link only")
 
     return details
         
+def get_proxies(num_proxies=100):
+    '''
+    Get a pool of Proxies from https://free-proxy-list.net
+    so that we don't have to manually copy and paste the proxies as proxies are getting removed frequently
+    
+    Args:
+    num_proxies: # Number of proxies to grab
+
+    Output:
+    List of proxies (string): ["IP_ADDRESS:PORT", ...]
+    '''
+    url_proxy = "https://free-proxy-list.net"
+
+    response = requests.get(url_proxy)
+    proxy_soup = BeautifulSoup(response.content, "lxml")
+    proxy_table = proxy_soup.find("table", {"id": "proxylisttable"}).select("tbody")[0]
+    proxy_table_rows = proxy_table.findAll("tr")
+    
+    return ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(max(num_proxies, 20))]
+
 if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
     # test_url = "https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291"
