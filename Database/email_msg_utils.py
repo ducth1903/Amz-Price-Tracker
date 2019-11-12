@@ -2,10 +2,15 @@ from string import Template
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-USERNAME = "amz.price.tracker.2019@gmail.com"
-PASSWORD = "ttnhoMeo0410"
-myTemplate = Template("""Hello, \n\nYou have subsribed to $PRODUCT_NAME.\nToday's price is $PRICE """)
+USERNAME = os.getenv("EMAIL")
+PASSWORD = os.getenv("PASSWORD")
+WEB_URL = os.getenv("WEB_URL")
+myTemplate = Template("""Hello, \n\nYou have subsribed to $PRODUCT_NAME.\nToday's price is $PRICE\n\n\n
+    You can unsubscribed to this product here: $WEB_URL/unsubscribe/$PRODUCT_ASIN&$USER_EMAIL""")
 
 def verify_email(server, user_email):
     server.set_debuglevel(True)
@@ -14,7 +19,7 @@ def verify_email(server, user_email):
     except:
         return -1
 
-def email_alert(user_email, PRODUCT_NAME, PRICE):
+def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE):
     # setup SMTP server (Simple Mail Transfer Protocol)
     s = smtplib.SMTP(host='smtp.gmail.com', port=587)
     s.starttls()
@@ -29,7 +34,7 @@ def email_alert(user_email, PRODUCT_NAME, PRICE):
     msg['Subject'] = "Amazon Price Tracker - {}".format(PRODUCT_NAME)
     
     # Add in message body
-    message = myTemplate.substitute({'PRODUCT_NAME':PRODUCT_NAME, 'PRICE':PRICE})
+    message = myTemplate.substitute({'PRODUCT_NAME':PRODUCT_NAME, 'PRICE':PRICE, 'WEB_URL': WEB_URL, 'PRODUCT_ASIN': PRODUCT_ASIN, 'USER_EMAIL': user_email})
     msg.attach(MIMEText(message, 'plain'))
     
     # Send the message via the server set up earlier
@@ -43,4 +48,4 @@ def email_alert(user_email, PRODUCT_NAME, PRICE):
 
 if __name__ == "__main__":
     # DEBUGGING
-    email_alert("dtr@melexis.com", "abc", 5)
+    email_alert("dtr@melexis.com", "product_asin", "abc", 5)

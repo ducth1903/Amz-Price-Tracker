@@ -65,6 +65,13 @@ def add_email_alert():
         # Go back to home page
         return redirect(url_for("index", product_asin=None, price_info=None))
 
+@app.route('/unsubscribe/<product_asin>&<user_email>')
+def unsubscribe(product_asin, user_email):
+    db_utils.remove_user_email(product_asin, user_email)
+
+    product_info, _ = helper_find_product_info_from_asin(product_asin)
+    return render_template("unsubscribe.html", userEmail=user_email, product_name=product_info['name'])
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ################################################## HELPER FUNCTION ##################################################
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

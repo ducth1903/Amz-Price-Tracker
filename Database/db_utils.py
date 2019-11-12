@@ -116,7 +116,13 @@ def add_user_email(product_asin, user_email):
     db.session.add(new_email)
     db.session.commit()
 
+def remove_user_email(product_asin, user_email):
+    row_to_remove = Emails.query.filter_by(asin=product_asin, userEmail=user_email).first()
+    if row_to_remove:
+        db.session.delete(row_to_remove)
+        db.session.commit()
+
 def alert_user_email(product_asin, product_name, product_price):
     list_emails = Emails.query.filter_by(asin=product_asin).all()
     for email in list_emails:
-        email_msg_utils.email_alert(email.userEmail, product_name, product_price)
+        email_msg_utils.email_alert(email.userEmail, product_asin, product_name, product_price)
