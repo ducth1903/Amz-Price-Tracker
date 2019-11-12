@@ -21,8 +21,8 @@ class Products(db.Model):
     imageURL = db.Column(db.Text)
     url = db.Column(db.Text, nullable=False)
 
-    prices = db.relationship("Prices", backref="product", lazy=True)
-    emails = db.relationship("Emails", backref="product", lazy=True)
+    # prices = db.relationship("Prices", backref="product", lazy=True)
+    # emails = db.relationship("Emails", backref="product", lazy=True)
 
     def __repr__(self):
         # how object print when printing it out
