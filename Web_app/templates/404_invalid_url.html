@@ -12,28 +12,32 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
-    <title>PT - Unsubscribe</title>
+    <title>404-Invalid-Request</title>
 </head>
 
 <body>
     <div class="container">
         <div class="row m-3 pb-3">
             <div class="col"></div>
-            <div class="col-12 col-md-8">
-                <h1 style="text-align: center;"><b>{{userEmail}}</b> has successfully unsubcribed from <b>{{product_name}}</b></h1>
-            </div>
-            <div class="col"></div>
-        </div>
-
-        <!-- Back home button -->
-        <div class="row m-1 pb-1">
-            <div class="col"></div>
-            <div class="col-12 col-md-8">
-                <button type="button" class="btn btn-outline-danger btn-lg btn-block" id="back-home-btn"">Home Page</button>
+            <div class="col-12 col-md-8 d-flex justify-content-center align-items-center" id="main">
+                <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center">404</h1>
+                <div class="inline-block align-middle">
+                    <h2 class="font-weight-normal lead" id="desc">The link you requested was not valid.</h2>
+                </div>
             </div>
             <div class="col"></div>
         </div>
     </div>
+
+    <!-- Back home button -->
+    <div class="row m-1 pb-1">
+        <div class="col"></div>
+        <div class="col-6 col-md-4">
+            <button type="button" class="btn btn-outline-danger btn-lg btn-block" id="back-home-btn"">Home Page</button>
+        </div>
+        <div class="col"></div>
+    </div>
+
 </body>
 
 <script>

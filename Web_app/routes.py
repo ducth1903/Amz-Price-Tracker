@@ -45,9 +45,14 @@ def add_new_product_from_user():
 
     if request.method == 'POST':
         add_product_url = request.form['add_product_url']
-        new_product_info, price_details = helper_add_new_product_from_user(add_product_url)
-        new_product_info['price'] = price_details[1]
-        return render_template('add_product.html', product_info=new_product_info)
+        add_response = helper_add_new_product_from_user(add_product_url)
+        if add_response:
+            new_product_info, price_details = add_response[0], add_response[1]
+            new_product_info['price'] = price_details[1]
+            return render_template('add_product.html', product_info=new_product_info)
+        else:
+            ''' Invalid URL '''
+            return render_template('404_invalid_url.html')
     else:
         # Go back to home page
         return redirect(url_for("index", product_asin=None, price_info=None))
@@ -89,6 +94,9 @@ def helper_add_new_product_from_user(product_url):
     from datetime import datetime
 
     details = extract_amazon_url(product_url)
+    if not details:
+        ''' Invalid URL '''
+        return None
 
     try:
         product_details = (details["ASIN"], details["name"], int(details["isDeal"]), \

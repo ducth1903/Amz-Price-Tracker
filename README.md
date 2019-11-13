@@ -26,6 +26,8 @@ Tips on scraping website like human (not detected as bots):
 - Use proxies
 - Reduce crawling rate
 
+To scale crawling: use framework like scrapy-redis (https://github.com/rmax/scrapy-redis)
+
 ---
 
 - Flask-Migrate explained: http://www.patricksoftwareblog.com/relational-database-migrations-using-flask-migrate/

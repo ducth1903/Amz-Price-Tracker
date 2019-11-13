@@ -135,14 +135,15 @@ def extract_amazon_url(URL):
         ASIN = helper_get_ASIN_from_URL(URL)
         page = requests.get(URL, headers=headers)
         print(f"Page response with {page.status_code}!")
-        page.status_code = 503
+        
         # ''' page.status_code should be 200 (valid page); 503 means CAPTCHA'''
         if page.status_code==200:
             # VALID RESPONSE
             pass
         elif page.status_code==404:
             # INVALID URL
-            raise Exception("The requested page is not valid...")
+            # raise Exception("The requested page is not valid...")
+            return None
         elif page.status_code==503:
             # CAPTCHA RESPONSE
             proxies = get_proxies(country_code="US")                
@@ -155,7 +156,11 @@ def extract_amazon_url(URL):
                     break            
 
         soup = BeautifulSoup(page.content, "lxml")
-        curr_prod = ProductAmz(soup)
+        try:
+            curr_prod = ProductAmz(soup)
+        except:
+            ''' Valid Amazon URL but probably not a specific product '''
+            return None
         
         details["ASIN"] = ASIN
         details["name"] = curr_prod.getName()
@@ -170,6 +175,7 @@ def extract_amazon_url(URL):
         details["url"] = URL
     else:
         print("Please enter Amazon link only")
+        return None
 
     return details
 
