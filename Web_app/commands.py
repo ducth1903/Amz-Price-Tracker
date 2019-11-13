@@ -19,3 +19,11 @@ def create_tables():
 @with_appcontext
 def drop_tables():
     db.drop_all()
+
+sys.path.append(os.path.join(my_dir, r"../Scraper"))
+from Scraper.main_tracker import price_tracker_job
+@click.command(name="main_tracker")
+@with_appcontext
+def main_tracker():
+    print("...start tracker from command...")
+    price_tracker_job()

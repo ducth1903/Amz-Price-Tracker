@@ -23,9 +23,10 @@ else:
 db = SQLAlchemy(app)
 
 from Web_app import routes
-from Web_app.commands import create_tables, drop_tables
+from Web_app.commands import create_tables, drop_tables, main_tracker
 app.cli.add_command(create_tables)
 app.cli.add_command(drop_tables)
+app.cli.add_command(main_tracker)
 
 # Initialize database once
 # The database will be created if not there

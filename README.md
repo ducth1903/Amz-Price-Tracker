@@ -18,6 +18,16 @@ To run the app:
 
 ---
 
+Tips on scraping website like human (not detected as bots):
+
+*Ref: https://www.scrapehero.com/tutorial-how-to-scrape-amazon-product-details-using-python-and-selectorlib/*
+
+- Add headers (i.e. User Agents) to request
+- Use proxies
+- Reduce crawling rate
+
+---
+
 - Flask-Migrate explained: http://www.patricksoftwareblog.com/relational-database-migrations-using-flask-migrate/
 
 - SQLite: serverless, lightweight, embedded
