@@ -45,11 +45,13 @@ Tips on scraping website like human (not detected as bots):
 
 - Heroku (deployment): (Heroku uses Postgres as its database)
 
-  <b>git push heroku master</b>
+  <b>git push heroku master</b> / git push heroku master --force
 
   <b>git remote -v</b>
 
   <b>heroku open; heroku ps</b> (check dyno hours on Heroku)
+
+  **heroku releases** (check push version)
 
   **heroku run bash**: to run bash on heroku server from local machine
 
@@ -70,7 +72,7 @@ Tips on scraping website like human (not detected as bots):
      <b>web: gunicorn app:app</b> (app:app specifies the module and application name; the first 'app' is the name of the script that launches Flask, i.e. app.run()) **(NOTE: script to launch Flask has to be at the root directory)**, and 
 
      <b>release: python db.py db upgrade</b>.  The command *db upgrade* populates the table schema from the database migration file into Heroku database
-
+  
   5. **Migrate**: (to update database's schema in the future)
   
      1. python manage.py db init: create migrations folder 

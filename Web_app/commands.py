@@ -20,6 +20,11 @@ def create_tables():
 def drop_tables():
     db.drop_all()
 
+@click.command(name="db_rollback")
+@with_appcontext
+def db_rollback():
+    db.session.rollback()
+
 sys.path.append(os.path.join(my_dir, r"../Scraper"))
 from Scraper.main_tracker import price_tracker_job
 @click.command(name="main_tracker")
