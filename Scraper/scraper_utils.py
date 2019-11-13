@@ -133,10 +133,9 @@ def extract_amazon_url(URL):
 
     if "www.amazon.com" in URL:        
         ASIN = helper_get_ASIN_from_URL(URL)
-        print(ASIN, URL)
         page = requests.get(URL, headers=headers)
         print(f"Page response with {page.status_code}!")
-
+        page.status_code = 503
         # ''' page.status_code should be 200 (valid page); 503 means CAPTCHA'''
         if page.status_code==200:
             # VALID RESPONSE
@@ -146,7 +145,7 @@ def extract_amazon_url(URL):
             raise Exception("The requested page is not valid...")
         elif page.status_code==503:
             # CAPTCHA RESPONSE
-            proxies = get_proxies()                
+            proxies = get_proxies(country_code="US")                
             for proxy in proxies:
                 try:
                     page = requests.get(URL, headers=headers, proxies={"https" : proxy, "http" : proxy}, timeout=1)
@@ -181,7 +180,7 @@ def helper_get_ASIN_from_URL(URL):
     ASIN = URL.split("/")[-1]
     return ASIN
 
-def get_proxies(num_proxies=100):
+def get_proxies(num_proxies=100, country_code=None):
     '''
     Get a pool of Proxies from https://free-proxy-list.net
     so that we don't have to manually copy and paste the proxies as proxies are getting removed frequently
@@ -198,8 +197,11 @@ def get_proxies(num_proxies=100):
     proxy_soup = BeautifulSoup(response.content, "lxml")
     proxy_table = proxy_soup.find("table", {"id": "proxylisttable"}).select("tbody")[0]
     proxy_table_rows = proxy_table.findAll("tr")
-    
-    return ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(max(num_proxies, 20))]
+    if country_code:
+        list_proxies = ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies) if proxy_table_rows[i].findAll("td")[2]==country_code]
+    else:
+        list_proxies = ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies)]
+    return list_proxies
 
 if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
