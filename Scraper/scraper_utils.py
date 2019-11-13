@@ -131,11 +131,9 @@ def extract_amazon_url(URL):
     }
     details = {"ASIN": "", "name": "", "price": "", "isDeal": False, "cat1": "", "cat2": "", "rating": 0.0, "nVotes": 0, "availability": "", "imageURL": "", "url": ""}
 
-    if "www.amazon.com" in URL:
-        # Convert URL to the shorter URL for better managing
-        if "?ref" in URL: URL = URL.replace("?ref", "/ref")
-        URL = URL.split("/ref")[0]
-        ASIN = URL.split("/")[-1]
+    if "www.amazon.com" in URL:        
+        ASIN = helper_get_ASIN_from_URL(URL)
+        print(ASIN, URL)
         page = requests.get(URL, headers=headers)
         print(f"Page response with {page.status_code}!")
 
@@ -175,7 +173,14 @@ def extract_amazon_url(URL):
         print("Please enter Amazon link only")
 
     return details
-        
+
+def helper_get_ASIN_from_URL(URL):
+    URL = URL.split("?")[0]
+    if "?ref" in URL: URL = URL.replace("?ref", "/ref")
+    URL = URL.split("/ref")[0]
+    ASIN = URL.split("/")[-1]
+    return ASIN
+
 def get_proxies(num_proxies=100):
     '''
     Get a pool of Proxies from https://free-proxy-list.net
@@ -200,8 +205,8 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
     # test_url = "https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291"
     # test_url = "https://www.amazon.com/Philips-Norelco-AT830-46-Frustration/dp/B00JITDVD2"
-    # test_url = "https://www.amazon.com/gp/product/B01GNO3G48/ref=ox_sc_act_title_1?smid=A2WMOX0U6VUJ6J&psc=1"
     # test_url = "https://www.amazon.com/dp/B07FZ8S74R/ref=ods_gw_ha_h1_d_dt_rain_T2_091619?pf_rd_p=daa98c3e-e685-4054-a905-c92800ab87c5&pf_rd_r=HMNTAQ39BAYK0MY3B4W8"
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
-    test_url = "https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N?ref_=ast_sto_dp"
+    # test_url = "https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N?ref_=ast_sto_dp"
+    test_url = "https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=43IFQ&pf_rd_r=MZK8QF2A55B71VZNRFH0&ref_=pd_gw_wish&pd_rd_w=o4evt&pd_rd_r=c85017da-88cd-4ee3-bcaf-754a3963ffd2"
     print(extract_amazon_url(test_url))
