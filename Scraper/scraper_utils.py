@@ -54,7 +54,9 @@ class ProductAmz():
         return self._name
 
     def getPrice(self):
-        return float(self._price[1:])
+        price_str = self._price[1:]
+        if ',' in price_str: price_str = price_str.replace(",", "")     # handle case such as "$1,099.5"
+        return float(price_str)
 
     def getDeal(self):
         return self._isDeal
@@ -216,5 +218,6 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/dp/B07FZ8S74R/ref=ods_gw_ha_h1_d_dt_rain_T2_091619?pf_rd_p=daa98c3e-e685-4054-a905-c92800ab87c5&pf_rd_r=HMNTAQ39BAYK0MY3B4W8"
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
     # test_url = "https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N?ref_=ast_sto_dp"
-    test_url = "https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=43IFQ&pf_rd_r=MZK8QF2A55B71VZNRFH0&ref_=pd_gw_wish&pd_rd_w=o4evt&pd_rd_r=c85017da-88cd-4ee3-bcaf-754a3963ffd2"
+    # test_url = "https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=43IFQ&pf_rd_r=MZK8QF2A55B71VZNRFH0&ref_=pd_gw_wish&pd_rd_w=o4evt&pd_rd_r=c85017da-88cd-4ee3-bcaf-754a3963ffd2"
+    test_url = "https://www.amazon.com/gp/product/B07Y8L329S?pf_rd_p=183f5289-9dc0-416f-942e-e8f213ef368b&pf_rd_r=9PS16BHNMKQJM5BTG9X2"
     print(extract_amazon_url(test_url))
