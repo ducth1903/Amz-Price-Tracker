@@ -19,10 +19,17 @@ from scraper_utils import extract_amazon_url, helper_get_ASIN_from_URL
 def index(product_asin=None):
     if request.method == 'GET':
         if not product_asin:
-            return render_template("index.html", product_info=None, price_info=None)
+            context = {
+                'product_info': None,
+                'price_info': None
+            }
         else:
             product_info, price_info = helper_find_product_info_from_asin(product_asin)
-            return render_template("index.html", product_info=product_info, price_info=price_info)
+            context = {
+                'product_info': product_info,
+                'price_info': price_info
+            }
+        return render_template("index.html", **context)
 
     elif request.method == 'POST':
         # search product by URL or by ASIN from database
