@@ -20,10 +20,9 @@ def price_tracker_job():
     URLs = [url_set[0] for url_set in db_utils.get_all_products()]
     
     for URL in tqdm(URLs):
-        try:
-            # Request HTML response from the page and extract info from it
-            details = scraper_utils.extract_amazon_url(URL)
-        except:
+        # Request HTML response from the page and extract info from it
+        details = scraper_utils.extract_amazon_url(URL)
+        if not details:
             print("Cannot scrape URL: {}".format(URL))
             continue
 

@@ -10,7 +10,7 @@ class Products(db.Model):
     __tablename__ = "products"
     __table_args__ = {'extend_existing': True}
 
-    asin = db.Column(db.String(asin_length_limit), primary_key=True)
+    asin = db.Column(db.String(asin_length_limit), primary_key=True, nullable=False)
     name = db.Column(db.Text)
     deal = db.Column(db.Integer)
     cat = db.Column(db.Text)
@@ -39,7 +39,7 @@ class Prices(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
-    asin = db.Column(db.String(asin_length_limit), db.ForeignKey("products.asin"), nullable=False)
+    asin = db.Column(db.String(asin_length_limit), db.ForeignKey("products.asin", ondelete="CASCADE"), nullable=False)
     price = db.Column(db.Float, nullable=False)
     datetime = db.Column(db.DateTime, nullable=False)
 
@@ -54,7 +54,7 @@ class Emails(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
-    asin = db.Column(db.String(asin_length_limit), db.ForeignKey("products.asin"), nullable=False)
+    asin = db.Column(db.String(asin_length_limit), db.ForeignKey("products.asin", ondelete="CASCADE"), nullable=False)
     userEmail = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
@@ -87,6 +87,10 @@ def insert_product(product_info):
         url=product_info[9]
     )
     db.session.add(new_prod)
+    db.session.commit()
+
+def delete_product(product_asin):
+    Products.query.filter_by(asin=product_asin).delete()
     db.session.commit()
 
 ########################## PRICES ##########################

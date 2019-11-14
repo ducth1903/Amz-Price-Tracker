@@ -21,6 +21,10 @@ for URL in tqdm(URLs):
     # Request HTML response from the page and extract info from it
     details = scraper_utils.extract_amazon_url(URL)
 
+    if not details:
+        """ If None, invalid URL (404) """
+        continue
+
     # Insert product if it is not in database yet 
     if not db_utils.get_product_from_asin(details["ASIN"]):
         product_details = (details["ASIN"], details["name"], int(details["isDeal"]), \

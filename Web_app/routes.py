@@ -12,7 +12,7 @@ sys.path.append(file_path.database_dir)
 import db_utils
 
 sys.path.append(file_path.scraper_dir)
-from scraper_utils import extract_amazon_url
+from scraper_utils import extract_amazon_url, helper_get_ASIN_from_URL
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<product_asin>', methods=['GET', 'POST'])
@@ -29,9 +29,7 @@ def index(product_asin=None):
         inputProduct = request.form['inputProduct']
         if "https://www.amazon.com" in inputProduct:
             # Extract ASIN id from URL
-            if "?ref" in inputProduct: inputProduct = inputProduct.replace("?ref", "/ref")
-            URL = inputProduct.split("/ref")[0]
-            product_asin = URL.split("/")[-1]
+            product_asin = helper_get_ASIN_from_URL(inputProduct)
         else:
             product_asin = inputProduct
         

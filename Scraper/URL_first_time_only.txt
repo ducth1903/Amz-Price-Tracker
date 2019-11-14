@@ -7,7 +7,6 @@ https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518
 https://www.amazon.com/dp/B07FZ8S74R
 https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291
 https://www.amazon.com/Philips-Norelco-AT830-46-Frustration/dp/B00JITDVD2
-https://www.amazon.com/gp/product/B01GNO3G48
 https://www.amazon.com/gp/product/B015WCV70W
 https://www.amazon.com/Cleanse-Advanced-Supports-Digestive-Supplement/dp/B071HWKFM1
 https://www.amazon.com/Puritans-Pride-Biotin-10000-Softgels/dp/B008FL8KSA
@@ -15,3 +14,14 @@ https://www.amazon.com/Nature-Made-CholestOff-Softgel-Sterols/dp/B008I2JVB6
 https://www.amazon.com/Nu-Skin-Whitening-Fluoride-Toothpaste/dp/B0749LVJ63
 https://www.amazon.com/Nu-Skin-Pharmanex-Maintenance-Formula/dp/B0090XCPFQ
 https://www.amazon.com/Dodow-Device-300-000-Falling-Asleep/dp/B00ZFOB4BK?ref_=ast_sto_dp
+https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N
+https://www.amazon.com/dp/B07Y8L329S
+https://www.amazon.com/All-new-Kindle-Oasis-now-with-adjustable-warm-light/dp/B07F7TLZF4
+https://www.amazon.com/All-new-Kindle-Paperwhite-Waterproof-Storage/dp/B07CXG6C9W/ref=sr_1_1?keywords=kindle&qid=1573615848&sr=8-1
+https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=SAuPu&pf_rd_r=6WHBPN0E0MMA1NNZ6182&ref_=pd_gw_wish&pd_rd_w=vcgeD&pd_rd_r=2384df4b-9dc2-455f-8656-53823b838958
+https://www.amazon.com/Razer-BlackWidow-Mechanical-Gaming-Keyboard/dp/B07FFCN3DJ/ref=sr_1_5?keywords=black%2Bwidow%2Brazor&qid=1569988659&sr=8-5&th=1
+https://www.amazon.com/dp/B07K3Z9412/ref=fs_a_i_0
+https://www.amazon.com/Roche-Posay-Toleriane-Hydrating-Gentle-Cleanser/dp/B01N7T7JKJ/ref=sxin_2_ac_d_rm?ac_md=0-0-bGFyb2NoZS1wb3NheSBjbGVhbnNlcg%3D%3D-ac_d_rm&crid=3E2MAO7HNBRPD&keywords=laroche-posay+cleanser&pd_rd_i=B01N7T7JKJ&pd_rd_r=fda809c2-af13-46cd-9786-7b9a457613f0&pd_rd_w=Dgq2g&pd_rd_wg=a5C16&pf_rd_p=ed481207-4bea-4e19-bbad-73ed40fdc292&pf_rd_r=Y0E3R89Y2BY2MJS8KV8K&psc=1&qid=1573655111&sprefix=laro%2Caps%2C942
+https://www.amazon.com/gp/product/B0794RHPZD/ref=s9_acsd_al_bw_c_x_2_w?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-1&pf_rd_r=T453VMTEJWA97M73YCGP&pf_rd_t=101&pf_rd_p=db4e987d-c210-4edc-925c-93f8734519cc&pf_rd_i=6669703011
+https://www.amazon.com/dp/B07WMLPSRL/ref=ods_gw_ha_vicc_eero_3k?pf_rd_p=8c6a75a0-3d8c-4be3-8951-3c4e3351229e&pf_rd_r=H3GFRVNBAJN0T0PHJ9HM
+https://www.amazon.com/Body-Fortress-Advanced-Protein-Chocolate/dp/B0048JEORY?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=LnuGS&pf_rd_r=JY4YV1TQHWGERN2WQREW&ref_=pd_gw_wish&pd_rd_w=wN866&pd_rd_r=8cb93d9a-73d6-4993-9404-e78944640952
