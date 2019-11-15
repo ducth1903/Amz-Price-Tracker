@@ -126,7 +126,7 @@ def remove_user_email(product_asin, user_email):
         db.session.delete(row_to_remove)
         db.session.commit()
 
-def alert_user_email(product_asin, product_name, product_price):
+def alert_user_email(product_asin, product_name, new_product_price, last_product_price):
     list_emails = Emails.query.filter_by(asin=product_asin).all()
     for email in list_emails:
-        email_msg_utils.email_alert(email.userEmail, product_asin, product_name, product_price)
+        email_msg_utils.email_alert(email.userEmail, product_asin, product_name, new_product_price, last_product_price)

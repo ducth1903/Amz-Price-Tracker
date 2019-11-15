@@ -30,10 +30,15 @@ def price_tracker_job():
         price_details = (details["ASIN"], details["price"], datetime.now())
         db_utils.insert_price(price_details)
 
-        # Email alert users
-        db_utils.alert_user_email(details["ASIN"], details["name"], details["price"])
+        list_prices = db_utils.get_price_from_asin(details["ASIN"])["price"]
+        # Email alert users only if price changes with the previous one
+        if is_price_change(list_prices):
+            db_utils.alert_user_email(details["ASIN"], details["name"], details["price"], list_prices[-2])
     
-    print("...finish tracking for {}...".format(datetime.now()))
+    print("...finish tracking at {} ...".format(datetime.now()))
+
+def is_price_change(list_prices):
+    return True if list_prices[-1] != list_prices[-2] else False
 
 if __name__ == "__main__":
     print("...start tracker...")

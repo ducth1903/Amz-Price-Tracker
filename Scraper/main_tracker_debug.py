@@ -36,5 +36,6 @@ for URL in tqdm(URLs):
     price_details = (details["ASIN"], details["price"], datetime.now())
     db_utils.insert_price(price_details)
 
-    # Email alert users
-    db_utils.alert_user_email(details["ASIN"], details["name"], details["price"])
+    # list_prices = db_utils.get_price_from_asin(details["ASIN"])["price"]
+    # # Email alert users
+    # db_utils.alert_user_email(details["ASIN"], details["name"], details["price"], list_prices[-2])
