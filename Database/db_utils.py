@@ -117,8 +117,12 @@ def add_user_email(product_asin, user_email):
         asin=product_asin,
         userEmail=user_email
     )
-    db.session.add(new_email)
-    db.session.commit()
+    # Check if email has already been added to database
+    list_emails_rows = Emails.query.filter_by(asin=product_asin).all()
+    list_emails = [row.userEmail for row in list_emails_rows]
+    if user_email not in list_emails:
+        db.session.add(new_email)
+        db.session.commit()
 
 def remove_user_email(product_asin, user_email):
     row_to_remove = Emails.query.filter_by(asin=product_asin, userEmail=user_email).first()
