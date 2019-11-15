@@ -1,6 +1,7 @@
 alembic==1.2.1
 appdirs==1.4.3
 beautifulsoup4==4.8.1
+blinker==1.4
 bs4==0.0.1
 certifi==2019.9.11
 chardet==3.0.4
@@ -9,6 +10,7 @@ colorclass==2.2.0
 cssselect==1.1.0
 fake-useragent==0.1.11
 Flask==1.1.1
+Flask-Mail==0.9.1
 Flask-Migrate==2.5.2
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.1

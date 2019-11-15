@@ -78,7 +78,16 @@ To scale crawling: use framework like scrapy-redis (https://github.com/rmax/scra
   5. **Migrate**: (to update database's schema in the future)
   
      1. python manage.py db init: create migrations folder 
-   2. python manage.py db migrate
-     3. python manage.py db upgrade
-  
      
+   6. python manage.py db migrate
+  
+     3. python manage.py db upgrade
+
+---
+
+Email (authentication error fix): https://stackoverflow.com/questions/10147455/how-to-send-an-email-with-gmail-as-provider-using-python/27515833#27515833
+
+- First, enable **Less Secure App** in the Google account
+- If after this still have authentication error, it means location unknown. Enable **DisplayUnlockCaptcha**
+
+   

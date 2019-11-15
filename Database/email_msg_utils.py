@@ -1,50 +1,36 @@
-from string import Template
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import os
+from flask_mail import Message
+import os, sys
 from dotenv import load_dotenv
 load_dotenv()
 
-USERNAME = os.getenv("EMAIL")
-PASSWORD = os.getenv("PASSWORD")
 WEB_URL = os.getenv("WEB_URL")
-myTemplate = Template("""Hello, \n\nYou have subsribed to $PRODUCT_NAME.\nToday's price is $PRICE\n\n\n
-    You can unsubscribed to this product here: $WEB_URL/unsubscribe/$PRODUCT_ASIN&$USER_EMAIL""")
 
-def verify_email(server, user_email):
-    server.set_debuglevel(True)
-    try:
-        user_email_result = server.verify(user_email)
-    except:
-        return -1
+# Actual path to this file
+my_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.join(my_dir, r"../")
+sys.path.append(root_dir)
+from Web_app import app, mail
 
 def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE):
-    # setup SMTP server (Simple Mail Transfer Protocol)
-    s = smtplib.SMTP(host='smtp.gmail.com', port=587)
-    s.starttls()
-    s.login(USERNAME, PASSWORD)
-    
-    # Setup the FROM, TO, SUBJECT to send email
-    msg = MIMEMultipart()
-    
-    # Setup parameter of the message
-    msg['From'] = USERNAME
-    msg['To'] = user_email
-    msg['Subject'] = "Amazon Price Tracker - {}".format(PRODUCT_NAME)
-    
-    # Add in message body
-    message = myTemplate.substitute({'PRODUCT_NAME':PRODUCT_NAME, 'PRICE':PRICE, 'WEB_URL': WEB_URL, 'PRODUCT_ASIN': PRODUCT_ASIN, 'USER_EMAIL': user_email})
-    msg.attach(MIMEText(message, 'plain'))
-    
-    # Send the message via the server set up earlier
-    s.send_message(msg)
-    # s.sendmail(USERNAME, user_email, msg.as_string())
-    
-    del msg
-    
-    # Terminate the SMTP session and close connection
-    s.quit()
+    msg = Message("Amazon Price Tracker - {}".format(PRODUCT_NAME), \
+        sender=app.config["MAIL_USERNAME"], \
+        recipients=[user_email])
+
+    product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
+    unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
+    msg.html = """\
+        Hi,<br/>
+        <br/>
+        You have subscribed to <b>{0}</b>.<br/>
+        <br/>
+        Today's price is <b>${1}</b><br/>
+        <br/>
+        View your product <a href="{2}">here</a><br/>
+        <br/>
+        <i>You can unsubscribed to this product <a href="{3}">here</a></i> 
+    """.format(PRODUCT_NAME, PRICE, product_url, unsubscriber_url)
+    print(product_url, unsubscriber_url)
+    mail.send(msg)
 
 if __name__ == "__main__":
     # DEBUGGING
