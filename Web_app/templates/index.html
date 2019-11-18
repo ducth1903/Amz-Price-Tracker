@@ -224,7 +224,8 @@ $(document).ready(function() {
 
     // Y scale
     var y = d3.scaleLinear().range([height, 0]);            // this is corresponding value in pixel
-    y.domain([0, d3.max(data, function(d) { return d.price; }) + 10]);
+    // y.domain([0, d3.max(data, function(d) { return d.price; }) + 10]);
+    y.domain([0, d3.max(data, function(d) { return d.price; }) + d3.max(data, function(d) { return d.price; })/10]);
     // Append Y Axis
     var yAxis = svg.append('g')
                 .attr("class", "axis")
