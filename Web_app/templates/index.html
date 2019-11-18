@@ -195,10 +195,11 @@ $(document).ready(function() {
         height = 500 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
+    // Ref: https://stackoverflow.com/questions/38580538/responsive-inline-svg-using-bootstrap
     var svg = d3.select("#price_graph")
         .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", "100%")
+            .attr("height", "100%")
             .attr("viewBox", "0 0 960 500")
             .attr("preserveAspectRatio", "xMidYMid meet")
         // translate this svg element to leave some margin
@@ -215,6 +216,7 @@ $(document).ready(function() {
                 .attr("transform", "translate(0,"+height+")")
                 .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")))
                 // .selectAll("text")
+                //     .style("font-size", "15px")
                 //     .style("text-anchor", "end")
                 //     .attr("dx", "-.8em")
                 //     .attr("dy", ".15em")
@@ -255,7 +257,7 @@ $(document).ready(function() {
             .datum(data)
             .attr("class", "line")
             .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 3)
             .attr("d", line);
 
     line_brush.append("g")
