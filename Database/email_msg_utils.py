@@ -32,6 +32,28 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
 
     mail.send(msg)
 
+def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
+    msg = Message("Amazon Price Tracker - Confirm Subscription", \
+        sender=("Amazon Price Tracker", app.config["MAIL_USERNAME"]), \
+        recipients=[user_email])
+
+    product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
+    unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
+    msg.html = """\
+        Hi,<br/>
+        <br/>
+        This is to confirm you have successfully subscribed to <b>{0}</b><br/>
+        <br/>
+        We will notify you when price changes!<br/>
+        <br/>
+        <br/>
+        <i>View your product <a href="{1}">here</a><br/></i>
+        <br/>
+        <i>You can unsubscribed to this product <a href="{2}">here</a></i>
+    """.format(PRODUCT_NAME, product_url, unsubscriber_url)
+
+    mail.send(msg)
+
 if __name__ == "__main__":
     # DEBUGGING
     email_alert("dtr@melexis.com", "product_asin", "abc", 5, 6)

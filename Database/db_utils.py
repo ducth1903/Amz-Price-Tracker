@@ -113,16 +113,23 @@ def insert_price(price_info):
 
 ########################## EMAILS ##########################
 def add_user_email(product_asin, user_email):
-    new_email = Emails(
-        asin=product_asin,
-        userEmail=user_email
-    )
-    # Check if email has already been added to database
-    list_emails_rows = Emails.query.filter_by(asin=product_asin).all()
-    list_emails = [row.userEmail for row in list_emails_rows]
-    if user_email not in list_emails:
-        db.session.add(new_email)
-        db.session.commit()
+    if len(user_email)==0 or '@' not in user_email:
+        return False            # bad email (invalid)
+    else:
+        new_email = Emails(
+            asin=product_asin,
+            userEmail=user_email
+        )
+        # Check if email has already been added to database
+        list_emails_rows = Emails.query.filter_by(asin=product_asin).all()
+        list_emails = [row.userEmail for row in list_emails_rows]
+        if user_email not in list_emails:
+            db.session.add(new_email)
+            db.session.commit()
+        
+        # Send confirmation email
+        email_msg_utils.email_confirm_subscribe(user_email, product_asin, get_product_from_asin(product_asin)['name'])
+        return True             # email format is correct, but still not guarantee if email is valid
 
 def remove_user_email(product_asin, user_email):
     row_to_remove = Emails.query.filter_by(asin=product_asin, userEmail=user_email).first()

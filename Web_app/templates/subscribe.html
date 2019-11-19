@@ -17,6 +17,7 @@
 
 <body>
     <div class="container">
+        {% if product_name %}
         <div class="row m-3 pb-3">
             <div class="col"></div>
             <div class="col-12 col-md-8">
@@ -26,12 +27,30 @@
             </div>
             <div class="col"></div>
         </div>
+        {% else %}
+        <div class="row m-3 pb-3">
+            <div class="col"></div>
+            <div class="col-12 col-md-8">
+                <h1 style="text-align: center;">{{userEmail}} is invalid</h1>
+                <p style="text-align: center;">Please re-enter your email</p>
+            </div>
+            <div class="col"></div>
+        </div>
+        {% endif %}
 
+        <br/>
         <!-- Back home button -->
         <div class="row m-1 pb-1">
             <div class="col"></div>
             <div class="col-12 col-md-8">
-                <button type="button" class="btn btn-outline-danger btn-lg btn-block" id="back-home-btn"">Home Page</button>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-info btn-lg btn-block" id="back-product-btn"">Product Page</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark btn-lg btn-block" id="back-home-btn"">Home Page</button>
+                    </div>
+                </div>
             </div>
             <div class="col"></div>
         </div>
@@ -40,6 +59,10 @@
 
 <script>
 $(document).ready(function() {
+    $("#back-product-btn").click(function() {
+        window.location.href = "{{ url_for('index', product_asin=product_asin) }}";
+    });
+
     $("#back-home-btn").click(function() {
         window.location.href = "{{ url_for('index') }}";
     });

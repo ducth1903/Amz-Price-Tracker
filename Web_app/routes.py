@@ -54,7 +54,7 @@ def add_new_product_from_user():
         if add_response:
             new_product_info, price_details = add_response[0], add_response[1]
             new_product_info['price'] = price_details[1]
-            return render_template('add_product.html', product_info=new_product_info)
+            return render_template('add_product.html', product_info=new_product_info, product_asin=new_product_info["ASIN"])
         else:
             ''' Invalid URL '''
             return render_template('404_invalid_url.html')
@@ -67,10 +67,15 @@ def add_email_alert():
     if request.method == 'POST':
         userEmail = request.form['userEmail']
         product_asin = request.referrer.split('/')[-1]
-        helper_add_user_email(product_asin, userEmail)
-        product_info, _ = helper_find_product_info_from_asin(product_asin)
-        return render_template("subscribe.html", userEmail=userEmail, product_name=product_info['name'])
-        # return redirect(url_for("index", product_asin=product_asin, user_subscribed=userEmail))
+        add_user_email_status = helper_add_user_email(product_asin, userEmail)
+        if add_user_email_status:
+            # email format is valid
+            product_info, _ = helper_find_product_info_from_asin(product_asin)
+            return render_template("subscribe.html", userEmail=userEmail, product_name=product_info['name'], product_asin=product_asin)
+            # return redirect(url_for("index", product_asin=product_asin, user_subscribed=userEmail))
+        else:
+            # invalid email
+            return render_template("subscribe.html", userEmail=userEmail, product_name=None, product_asin=product_asin)
     else:
         # Go back to home page
         return redirect(url_for("index", product_asin=None, price_info=None))
@@ -119,4 +124,4 @@ def helper_add_new_product_from_user(product_url):
     return details, price_details
 
 def helper_add_user_email(product_asin, userEmail):
-    db_utils.add_user_email(product_asin, userEmail)
+    return db_utils.add_user_email(product_asin, userEmail)
