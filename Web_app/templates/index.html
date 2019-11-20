@@ -128,7 +128,7 @@ $(document).ready(function() {
     var product_info = JSON.parse('{{ product_info | tojson | safe }}');
     var product_info_rating = product_info["rating"];
     for (var i=1; i<6; i++) {
-        if (i <= product_info_rating) {
+        if ((i <= product_info_rating) || (i-product_info_rating <=0.5)) {
             var solid_star = "<i class='fas fa-star' style='color: #e2e835;'></i>";
             $("#p-product-info-rating").append(solid_star);
         } else {

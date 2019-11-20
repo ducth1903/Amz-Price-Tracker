@@ -7,7 +7,7 @@ class ProductAmz():
     def __init__(self, soup_obj):
         # Name
         self._name = soup_obj.find(id="productTitle").text.strip()
-        if "\"" in self._name: self._name = self._name.replace("\"", "inch")        # this cause error when reading string and when parse JSON to frontend
+        self.clean_name()
 
         # Category 1 and 2
         try:
@@ -16,6 +16,8 @@ class ProductAmz():
             self._category2 = category.select("li")[2].text.strip()
         except:
             self._category1, self._category2 = "", ""
+        self._category1 = self.clean_text(self._category1)
+        self._category2 = self.clean_text(self._category2)
 
         # Price and isDeal
         isBook = soup_obj.find("div", {"id": "dp", "class": {"book"}})
@@ -37,6 +39,7 @@ class ProductAmz():
             self._availability = soup_obj.find("div", id="availability").text.strip()
         except:
             self._availability = ""
+        self._availability = self.clean_text(self._availability)
 
         # Get image URL
         isImage = soup_obj.find("img", id="landingImage")
@@ -120,6 +123,20 @@ class ProductAmz():
             else:
                 self._price = price
         self._isDeal = False
+
+    def clean_name(self):
+        if "\"" in self._name: 
+            self._name = self._name.replace("\"", "inch")        # this cause error when reading string and when parse JSON to frontend
+
+    def clean_text(self, text):
+        """ Clean text for cat1, cat2, availability """
+        if "\n" in text:
+            text = text.replace("\n", "")
+        if "\t" in text:
+            text = text.replace("\t", "")
+        
+        text = ' '.join(text.split())
+        return text
 
 def extract_amazon_url(URL):
     '''
@@ -230,6 +247,7 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Apple-iPad-11-inch-Wi-Fi-64GB/dp/B07K344J3N?ref_=ast_sto_dp"
     # test_url = "https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=43IFQ&pf_rd_r=MZK8QF2A55B71VZNRFH0&ref_=pd_gw_wish&pd_rd_w=o4evt&pd_rd_r=c85017da-88cd-4ee3-bcaf-754a3963ffd2"
     # test_url = "https://www.amazon.com/gp/product/B07Y8L329S?pf_rd_p=183f5289-9dc0-416f-942e-e8f213ef368b&pf_rd_r=9PS16BHNMKQJM5BTG9X2"
-    test_url = "https://www.amazon.com/dp/B07JND7GNB"
+    # test_url = "https://www.amazon.com/dp/B07JND7GNB"
+    test_url = "https://www.amazon.com/Acer-V227Q-21-5-Monitor-Display/dp/B07KKLSLKY/ref=pd_ybh_a_2?_encoding=UTF8&psc=1&refRID=TVGVYJ772A6D9QE4TP6E"
     print(extract_amazon_url(test_url))
     # print(helper_get_ASIN_from_URL(test_url, getTrimmedURL=True))
