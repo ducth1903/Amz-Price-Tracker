@@ -25,6 +25,13 @@ def drop_tables():
 def db_rollback():
     db.session.rollback()
 
+@click.command(name="remove_product")
+@click.argument('product_asin')
+@with_appcontext
+def remove_product(product_asin):
+    ''' this will remove product by product_asin and all of its associated information in other tables '''
+    delete_product(product_asin)
+
 sys.path.append(os.path.join(my_dir, r"../Scraper"))
 from Scraper.main_tracker import price_tracker_job
 @click.command(name="main_tracker")

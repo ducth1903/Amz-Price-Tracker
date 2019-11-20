@@ -29,6 +29,7 @@ from Web_app.commands import *
 app.cli.add_command(create_tables)
 app.cli.add_command(drop_tables)
 app.cli.add_command(db_rollback)
+app.cli.add_command(remove_product)
 app.cli.add_command(main_tracker)
 
 # Initialize database once
