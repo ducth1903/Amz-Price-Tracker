@@ -1,9 +1,11 @@
 from flask_mail import Message
 import os, sys
+from datetime import date
 from dotenv import load_dotenv
 load_dotenv()
 
 WEB_URL = os.getenv("WEB_URL")
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
 
 # Actual path to this file
 my_dir = os.path.dirname(os.path.realpath(__file__))
@@ -51,6 +53,24 @@ def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
         <br/>
         <i>You can unsubscribed to this product <a href="{2}">here</a></i>
     """.format(PRODUCT_NAME, product_url, unsubscriber_url)
+
+    mail.send(msg)
+
+def admin_alert(failed_URLs, total_URLs):
+    msg = Message("Amazon Price Tracker - Main Tracker Status ({})".format(date.today()), \
+        sender=("Amazon Price Tracker", app.config["MAIL_USERNAME"]), \
+        recipients=[ADMIN_EMAIL])
+    
+    if len(failed_URLs) == 0:
+        # No failure -> Good
+        msg.html = """ Main tracker runs well! No failed URLs!"""
+    else:
+        mgs.html = """\
+            {}/{} URLs failed:<br/>
+            <br/>
+        """.format(len(failed_URLs, total_URLs))
+        for idx, failed_url in enumerate(failed_URLs):
+            msg.html += "{}. {}<br/>".format(idx+1, failed_url)
 
     mail.send(msg)
 

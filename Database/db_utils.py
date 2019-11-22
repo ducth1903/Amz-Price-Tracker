@@ -141,3 +141,6 @@ def alert_user_email(product_asin, product_name, new_product_price, last_product
     list_emails = Emails.query.filter_by(asin=product_asin).all()
     for email in list_emails:
         email_msg_utils.email_alert(email.userEmail, product_asin, product_name, new_product_price, last_product_price)
+
+def alert_admin_tracker(failed_URLs, total_URLs):
+    email_msg_utils.admin_alert(failed_URLs, total_URLs)

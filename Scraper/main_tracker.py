@@ -18,11 +18,13 @@ import db_utils
 def price_tracker_job():
     # Get list of URLs for all products from the table
     URLs = [url_set[0] for url_set in db_utils.get_all_products()]
+    total_URLs, failed_URLs = len(URLs), []
     
     for URL in tqdm(URLs):
         # Request HTML response from the page and extract info from it
         details = scraper_utils.extract_amazon_url(URL)
         if not details:
+            failed_URLs.append(URL)
             print("Cannot scrape URL: {}".format(URL))
             continue
 
@@ -35,6 +37,7 @@ def price_tracker_job():
         if is_price_change(list_prices):
             db_utils.alert_user_email(details["ASIN"], details["name"], details["price"], list_prices[-2])
     
+    db_utils.alert_admin_tracker(failed_URLs, URLs)
     print("...finish tracking at {} ...".format(datetime.now()))
 
 def is_price_change(list_prices):
