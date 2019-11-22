@@ -65,7 +65,7 @@ def admin_alert(failed_URLs, total_URLs):
         # No failure -> Good
         msg.html = """ Main tracker runs well! No failed URLs!"""
     else:
-        mgs.html = """\
+        msg.html = """\
             {}/{} URLs failed:<br/>
             <br/>
         """.format(len(failed_URLs), len(total_URLs))
