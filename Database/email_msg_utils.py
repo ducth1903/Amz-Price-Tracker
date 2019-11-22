@@ -68,7 +68,7 @@ def admin_alert(failed_URLs, total_URLs):
         mgs.html = """\
             {}/{} URLs failed:<br/>
             <br/>
-        """.format(len(failed_URLs, total_URLs))
+        """.format(len(failed_URLs), len(total_URLs))
         for idx, failed_url in enumerate(failed_URLs):
             msg.html += "{}. {}<br/>".format(idx+1, failed_url)
 
