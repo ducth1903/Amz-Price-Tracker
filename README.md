@@ -99,4 +99,6 @@ Email (authentication error fix): https://stackoverflow.com/questions/10147455/h
 - First, enable **Less Secure App** in the Google account
 - If after this still have authentication error, it means location unknown. Enable **DisplayUnlockCaptcha**
 
-   
+Update (11/22/2019): Since Gmail SMTP usually has some errors, it is better to use SendGrid Add-on (Free)
+
+ 
