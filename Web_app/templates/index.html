@@ -224,8 +224,9 @@ $(document).ready(function() {
 
     // Y scale
     var y = d3.scaleLinear().range([height, 0]);            // this is corresponding value in pixel
-    // y.domain([0, d3.max(data, function(d) { return d.price; }) + 10]);
-    y.domain([0, d3.max(data, function(d) { return d.price; }) + d3.max(data, function(d) { return d.price; })/10]);
+    var max_price = d3.max(data, function(d) { return d.price; });
+    var min_price = d3.min(data, function(d){ return d.price; });
+    y.domain([min_price/2,  max_price*1.1]);
     // Append Y Axis
     var yAxis = svg.append('g')
                 .attr("class", "axis")
@@ -257,6 +258,7 @@ $(document).ready(function() {
     line_brush.append("path")
             .datum(data)
             .attr("class", "line")
+                .style("fill", "none")          // this will not draw a black area to close from the last point to the first one
             .attr("stroke", "steelblue")
             .attr("stroke-width", 3)
             .attr("d", line);

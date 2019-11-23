@@ -82,6 +82,15 @@ To scale crawling: use framework like scrapy-redis (https://github.com/rmax/scra
    6. python manage.py db migrate
   
      3. python manage.py db upgrade
+  
+  
+  
+  <b>To download Heroku database:</b>
+  
+  - heroku pg:backups:capture -> to get the latest backup
+  - heroku pg:backups:download
+  - Then locally, pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d web_backup C:\Code\Flask\Price_Tracker\latest.dump
+  - May need to cd to postgres/bin folder in the system to run pg_restore
 
 ---
 
