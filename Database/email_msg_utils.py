@@ -43,7 +43,7 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
         sg = SendGridAPIClient(SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
-        print(str(e))
+        print(str(e), e.message)
 
 def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
     product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
