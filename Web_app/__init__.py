@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
+# from flask_mail import Mail
 import file_path
 import sys
 
@@ -22,7 +22,7 @@ else:
     # print('...init...', app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = SQLAlchemy(app)
-mail = Mail(app)
+# mail = Mail(app)
 
 from Web_app import routes
 from Web_app.commands import *
