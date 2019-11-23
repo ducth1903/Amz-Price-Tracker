@@ -39,7 +39,7 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
     )
     
     try:
-        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
@@ -68,7 +68,7 @@ def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
     )
     
     try:
-        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
@@ -93,7 +93,7 @@ def admin_alert(failed_URLs, total_URLs):
     )
     
     try:
-        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
