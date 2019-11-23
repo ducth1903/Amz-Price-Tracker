@@ -22,15 +22,15 @@ class BaseConfig:
     CACHE_TYPE = "null"
 
     # Configuration for Flask-Mail
-    MAIL_SERVER = "smtp.gmail.com"
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USE_SSL = False
-    MAIL_MAX_EMAILS = None
-    MAIL_ASCII_ATTACHMENTS = False
+    # MAIL_SERVER = "smtp.gmail.com"
+    # MAIL_PORT = 587
+    # MAIL_USE_TLS = True
+    # MAIL_USE_SSL = False
+    # MAIL_MAX_EMAILS = None
+    # MAIL_ASCII_ATTACHMENTS = False
     MAIL_USERNAME = os.getenv("EMAIL")
-    MAIL_PASSWORD = os.getenv("PASSWORD")
-    MAIL_DEFAULT_SENDER = os.getenv("EMAIL")
+    # MAIL_PASSWORD = os.getenv("PASSWORD")
+    # MAIL_DEFAULT_SENDER = os.getenv("EMAIL")
 
 class DevelopmentConfig(BaseConfig):
     """

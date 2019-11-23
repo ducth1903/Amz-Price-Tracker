@@ -17,10 +17,6 @@ sys.path.append(root_dir)
 from Web_app import app
 
 def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
-    # msg = Message("Amazon Price Tracker - {}".format(PRODUCT_NAME), \
-    #     sender=("Amazon Price Tracker", app.config["MAIL_USERNAME"]), \
-    #     recipients=[user_email])
-
     product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
     unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
     msg_html = """\
@@ -43,16 +39,12 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
     )
     
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
 
 def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
-    # msg = Message("Amazon Price Tracker - Confirm Subscription", \
-    #     sender=("Amazon Price Tracker", app.config["MAIL_USERNAME"]), \
-    #     recipients=[user_email])
-
     product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
     unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
     msg_html = """\
@@ -76,16 +68,12 @@ def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
     )
     
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
 
 def admin_alert(failed_URLs, total_URLs):
-    # msg = Message("Amazon Price Tracker - Main Tracker Status ({})".format(date.today()), \
-    #     sender=("Amazon Price Tracker", app.config["MAIL_USERNAME"]), \
-    #     recipients=[ADMIN_EMAIL])
-    
     if len(failed_URLs) == 0:
         # No failure -> Good
         msg_html = """ Main tracker runs well! No failed URLs!"""
@@ -105,7 +93,7 @@ def admin_alert(failed_URLs, total_URLs):
     )
     
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        sg = SendGridAPIClient(apikey=SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
         print(str(e))
