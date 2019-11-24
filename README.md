@@ -101,4 +101,12 @@ Email (authentication error fix): https://stackoverflow.com/questions/10147455/h
 
 Update (11/22/2019): Since Gmail SMTP usually has some errors, it is better to use SendGrid Add-on (Free)
 
+---
+
+<b>Request Time-out</b>
+
+- Best practice is to get the response time to be < 500ms
+- Heroku has limit timeout to 30s
+- You can configure the timeout in Profile gunicorn
+
  

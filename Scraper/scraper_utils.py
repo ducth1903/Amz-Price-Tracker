@@ -239,6 +239,8 @@ def get_proxies(num_proxies=100, country_code=None):
     return list_proxies
 
 if __name__ == "__main__":
+    import time
+    start_time = time.time()
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
     # test_url = "https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291"
     # test_url = "https://www.amazon.com/Philips-Norelco-AT830-46-Frustration/dp/B00JITDVD2"
@@ -248,6 +250,10 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Acer-HA220Q-Monitor-Ultra-Thin-Design/dp/B071784D4R?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=43IFQ&pf_rd_r=MZK8QF2A55B71VZNRFH0&ref_=pd_gw_wish&pd_rd_w=o4evt&pd_rd_r=c85017da-88cd-4ee3-bcaf-754a3963ffd2"
     # test_url = "https://www.amazon.com/gp/product/B07Y8L329S?pf_rd_p=183f5289-9dc0-416f-942e-e8f213ef368b&pf_rd_r=9PS16BHNMKQJM5BTG9X2"
     # test_url = "https://www.amazon.com/dp/B07JND7GNB"
-    test_url = "https://www.amazon.com/Acer-V227Q-21-5-Monitor-Display/dp/B07KKLSLKY/ref=pd_ybh_a_2?_encoding=UTF8&psc=1&refRID=TVGVYJ772A6D9QE4TP6E"
-    print(extract_amazon_url(test_url))
+    # test_url = "https://www.amazon.com/Acer-V227Q-21-5-Monitor-Display/dp/B07KKLSLKY/ref=pd_ybh_a_2?_encoding=UTF8&psc=1&refRID=TVGVYJ772A6D9QE4TP6E"
+    test_url = "https://www.amazon.com/dp/B07VTK654B/ref=s9_acsd_al_bw_c2_x_1_t?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-2&pf_rd_r=87W6Q3D5J5SCWRP0BAR2&pf_rd_t=101&pf_rd_p=61bdadab-c5b6-413d-b733-e6aa22c94614&pf_rd_i=9818047011&th=1"
+    extracted_info = extract_amazon_url(test_url)
+    end_time = time.time()
+    print(extracted_info)
+    print('Scraping takes {} sec'.format(end_time-start_time))
     # print(helper_get_ASIN_from_URL(test_url, getTrimmedURL=True))
