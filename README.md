@@ -105,8 +105,13 @@ Update (11/22/2019): Since Gmail SMTP usually has some errors, it is better to u
 
 <b>Request Time-out</b>
 
-- Best practice is to get the response time to be < 500ms
+- Best practice is to get the response time to most requests < 500ms
 - Heroku has limit timeout to 30s
 - You can configure the timeout in Profile gunicorn
+
+Other better solution is to move the long-time tasks to background process
+
+- <a href="https://devcenter.heroku.com/articles/request-timeout">Request timeout</a>
+- <a href="https://devcenter.heroku.com/articles/python-rq">Background Tasks in Python with Redis Queue (RQ)</a>
 
  
