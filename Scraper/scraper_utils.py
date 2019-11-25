@@ -61,6 +61,7 @@ class ProductAmz():
         return self._name
 
     def getPrice(self):
+        if '-' in self._price: self._price = self._price.split('-')[-1].strip()     # range (i.e. $50 - $70)
         price_str = self._price[1:]
         if ',' in price_str: price_str = price_str.replace(",", "")     # handle case such as "$1,099.5"
         return float(price_str)
@@ -251,7 +252,8 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/gp/product/B07Y8L329S?pf_rd_p=183f5289-9dc0-416f-942e-e8f213ef368b&pf_rd_r=9PS16BHNMKQJM5BTG9X2"
     # test_url = "https://www.amazon.com/dp/B07JND7GNB"
     # test_url = "https://www.amazon.com/Acer-V227Q-21-5-Monitor-Display/dp/B07KKLSLKY/ref=pd_ybh_a_2?_encoding=UTF8&psc=1&refRID=TVGVYJ772A6D9QE4TP6E"
-    test_url = "https://www.amazon.com/dp/B07VTK654B/ref=s9_acsd_al_bw_c2_x_1_t?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-2&pf_rd_r=87W6Q3D5J5SCWRP0BAR2&pf_rd_t=101&pf_rd_p=61bdadab-c5b6-413d-b733-e6aa22c94614&pf_rd_i=9818047011&th=1"
+    # test_url = "https://www.amazon.com/dp/B07VTK654B/ref=s9_acsd_al_bw_c2_x_1_t?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-2&pf_rd_r=87W6Q3D5J5SCWRP0BAR2&pf_rd_t=101&pf_rd_p=61bdadab-c5b6-413d-b733-e6aa22c94614&pf_rd_i=9818047011&th=1"
+    test_url = "https://www.amazon.com/Hydro-Flask-Double-Insulated-Stainless/dp/B01GW2GH4M?pf_rd_p=c4a36063-ed31-585b-b9d3-e14ee41d7e8c&pf_rd_r=NQFBVEK3ETWZZG8AXESZ&pd_rd_wg=eQKGe&ref_=pd_gw_ri&pd_rd_w=A7mml&pd_rd_r=9a366c83-5373-429f-8491-702c0f919b95"
     extracted_info = extract_amazon_url(test_url)
     end_time = time.time()
     print(extracted_info)
