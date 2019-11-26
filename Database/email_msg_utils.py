@@ -39,7 +39,6 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
     )
     
     try:
-        print('here...', SENDGRID_API_KEY)
         sg = SendGridAPIClient(SENDGRID_API_KEY)
         sg.send(msg)
     except Exception as e:
