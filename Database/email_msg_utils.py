@@ -18,7 +18,7 @@ from Web_app import app
 
 def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
     product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
-    unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
+    unsubscriber_url = "{}/unsubscribe/{}&amp;{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
     msg_html = """\
         Hi,<br/>
         <br/>
@@ -46,7 +46,7 @@ def email_alert(user_email, PRODUCT_ASIN, PRODUCT_NAME, PRICE, LAST_PRICE):
 
 def email_confirm_subscribe(user_email, PRODUCT_ASIN, PRODUCT_NAME):
     product_url = "{}/{}".format(WEB_URL, PRODUCT_ASIN)
-    unsubscriber_url = "{}/unsubscribe/{}&{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
+    unsubscriber_url = "{}/unsubscribe/{}&amp;{}/".format(WEB_URL,PRODUCT_ASIN, user_email)
     msg_html = """\
         Hi,<br/>
         <br/>

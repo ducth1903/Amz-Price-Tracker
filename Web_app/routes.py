@@ -80,7 +80,7 @@ def add_email_alert():
         # Go back to home page
         return redirect(url_for("index", product_asin=None, price_info=None))
 
-@app.route('/unsubscribe/<product_asin>&<user_email>')
+@app.route('/unsubscribe/<product_asin>&amp;<user_email>')
 def unsubscribe(product_asin, user_email):
     print("in unsubscribe... 1")
     db_utils.remove_user_email(product_asin, user_email)
