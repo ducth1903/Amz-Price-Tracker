@@ -81,6 +81,7 @@ def add_email_alert():
         return redirect(url_for("index", product_asin=None, price_info=None))
 
 @app.route('/unsubscribe/<product_asin>&amp;<user_email>')
+@app.route('/unsubscribe/<product_asin>&<user_email>')
 def unsubscribe(product_asin, user_email):
     '''
     @ sign in user_email is percent-encoded as %40 (0x40)
