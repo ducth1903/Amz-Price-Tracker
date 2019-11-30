@@ -82,9 +82,12 @@ def add_email_alert():
 
 @app.route('/unsubscribe/<product_asin>&<user_email>')
 def unsubscribe(product_asin, user_email):
+    print("in unsubscribe... 1")
     db_utils.remove_user_email(product_asin, user_email)
+    print("in unsubscribe... 2")
 
     product_info, _ = helper_find_product_info_from_asin(product_asin)
+    print("in unsubscribe... 3")
     return render_template("unsubscribe.html", userEmail=user_email, product_name=product_info['name'])
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
