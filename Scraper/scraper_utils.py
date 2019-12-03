@@ -3,6 +3,13 @@ from bs4 import BeautifulSoup
 import sys
 import json
 
+# NOTE: It is essential to specify headers so that it makes requests seem to be coming from a browser, not a script
+# otherwise, will be prevented by CAPTCHA
+headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+    "content-type":"text"
+}
+
 class ProductAmz():
     def __init__(self, soup_obj):
         # Name
@@ -147,12 +154,6 @@ def extract_amazon_url(URL):
     Output: dict (details of the product: name, price, deal, url)
     '''
 
-    # NOTE: It is essential to specify headers so that it makes requests seem to be coming from a browser, not a script
-    # otherwise, will be prevented by CAPTCHA
-    headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
-        "content-type":"text"
-    }
     details = {"ASIN": "", "name": "", "price": "", "isDeal": False, "cat1": "", "cat2": "", "rating": 0.0, "nVotes": 0, "availability": "", "imageURL": "", "url": ""}
 
     if "www.amazon.com" in URL:
@@ -186,7 +187,7 @@ def extract_amazon_url(URL):
             curr_prod = ProductAmz(soup)
         except:
             ''' Valid Amazon URL but probably not a specific product '''
-            print("Valid Amazon URL but probably not a specific product")
+            print("Valid Amazon URL but probably not a specific product... ", URL)
             return None
         
         details["ASIN"] = ASIN
@@ -239,7 +240,33 @@ def get_proxies(num_proxies=100, country_code=None):
         list_proxies = ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies)]
     return list_proxies
 
+def extract_subcategory_url(url_prefix="https://www.amazon.com"):
+    '''
+    Send HTTP request to a sub-category website, then extract URLs of specific products from it
+    Read urls for sub-categories from the text file
+    '''
+    with open("URL_sub_categories.txt", "r") as f:
+        all_lines = f.readlines()
+        URLs = [line.split(":", 1)[1].strip() for line in all_lines]
+
+    list_sub_urls = []
+    for URL in URLs:
+        page = requests.get(URL, headers=headers)
+        soup = BeautifulSoup(page.content, "lxml")
+        
+        for sub_url in soup.find("ol", id="zg-ordered-list"):
+            sub_url = url_prefix + sub_url.find("a", {"class": {"a-link-normal"}})["href"]
+            list_sub_urls.append(sub_url)
+
+    # Write to text file
+    with open("URL_first_time_only.txt", "r") as f:
+        comment_lines = f.readlines()[:2]
+    with open("URL_first_time_only.txt", "w") as f:
+        for c in comment_lines: f.write(c)
+        for curr_sub_url in list_sub_urls: f.write(curr_sub_url+"\n")
+
 if __name__ == "__main__":
+    '''
     import time
     start_time = time.time()
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
@@ -259,3 +286,6 @@ if __name__ == "__main__":
     print(extracted_info)
     print('Scraping takes {} sec'.format(end_time-start_time))
     # print(helper_get_ASIN_from_URL(test_url, getTrimmedURL=True))
+    '''
+
+    extract_subcategory_url()
