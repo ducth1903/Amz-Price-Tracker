@@ -266,7 +266,6 @@ def extract_subcategory_url(url_prefix="https://www.amazon.com"):
         for curr_sub_url in list_sub_urls: f.write(curr_sub_url+"\n")
 
 if __name__ == "__main__":
-    '''
     import time
     start_time = time.time()
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
@@ -286,6 +285,5 @@ if __name__ == "__main__":
     print(extracted_info)
     print('Scraping takes {} sec'.format(end_time-start_time))
     # print(helper_get_ASIN_from_URL(test_url, getTrimmedURL=True))
-    '''
-
-    extract_subcategory_url()
+    
+    # extract_subcategory_url()
