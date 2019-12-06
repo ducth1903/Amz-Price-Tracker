@@ -1,11 +1,11 @@
-Laptops: https://www.amazon.com/gp/bestsellers/electronics/565108?ref_=Oct_BSellerC_565108_SAll&pf_rd_p=2afdf005-5dad-59c6-b6b0-be699f2d03aa&pf_rd_s=merchandised-search-10&pf_rd_t=101&pf_rd_i=565108&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=568KPN3TYTP11QT06DJT&pf_rd_r=568KPN3TYTP11QT06DJT&pf_rd_p=2afdf005-5dad-59c6-b6b0-be699f2d03aa
-Computers & Tablets: https://www.amazon.com/Best-Sellers-Electronics-Computers-Tablets/zgbs/electronics/13896617011/ref=zg_bs_unv_e_3_565098_1
-Desktops: https://www.amazon.com/Best-Sellers-Electronics-Desktop-Computers/zgbs/electronics/565098/ref=zg_bs_nav_e_3_13896617011
-Tablets: https://www.amazon.com/Best-Sellers-Electronics-Computer-Tablets/zgbs/electronics/1232597011/ref=zg_bs_nav_e_3_13896617011
-Monitors: https://www.amazon.com/Best-Sellers-Electronics-Computer-Monitors/zgbs/electronics/1292115011/ref=zg_bs_nav_e_2_541966
-Data Storage: https://www.amazon.com/Best-Sellers-Electronics-Data-Storage/zgbs/electronics/1292110011/ref=zg_bs_nav_e_3_1292115011
-Electronics: https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics/ref=zg_bs_unv_e_1_1292115011_2
-Automotive: https://www.amazon.com/Best-Sellers-Automotive/zgbs/automotive/ref=zg_bs_nav_0
-Beauty & Personal Care: https://www.amazon.com/Best-Sellers-Beauty/zgbs/beauty/ref=zg_bs_nav_0
+#Laptops: https://www.amazon.com/gp/bestsellers/electronics/565108?ref_=Oct_BSellerC_565108_SAll&pf_rd_p=2afdf005-5dad-59c6-b6b0-be699f2d03aa&pf_rd_s=merchandised-search-10&pf_rd_t=101&pf_rd_i=565108&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=568KPN3TYTP11QT06DJT&pf_rd_r=568KPN3TYTP11QT06DJT&pf_rd_p=2afdf005-5dad-59c6-b6b0-be699f2d03aa
+#Computers & Tablets: https://www.amazon.com/Best-Sellers-Electronics-Computers-Tablets/zgbs/electronics/13896617011/ref=zg_bs_unv_e_3_565098_1
+#Desktops: https://www.amazon.com/Best-Sellers-Electronics-Desktop-Computers/zgbs/electronics/565098/ref=zg_bs_nav_e_3_13896617011
+#Tablets: https://www.amazon.com/Best-Sellers-Electronics-Computer-Tablets/zgbs/electronics/1232597011/ref=zg_bs_nav_e_3_13896617011
+#Monitors: https://www.amazon.com/Best-Sellers-Electronics-Computer-Monitors/zgbs/electronics/1292115011/ref=zg_bs_nav_e_2_541966
+#Data Storage: https://www.amazon.com/Best-Sellers-Electronics-Data-Storage/zgbs/electronics/1292110011/ref=zg_bs_nav_e_3_1292115011
+#Electronics: https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics/ref=zg_bs_unv_e_1_1292115011_2
+#Automotive: https://www.amazon.com/Best-Sellers-Automotive/zgbs/automotive/ref=zg_bs_nav_0
+#Beauty & Personal Care: https://www.amazon.com/Best-Sellers-Beauty/zgbs/beauty/ref=zg_bs_nav_0
 Kitchen & Dining: https://www.amazon.com/Best-Sellers-Kitchen-Dining/zgbs/kitchen/ref=zg_bs_nav_0
 Baby: https://www.amazon.com/Best-Sellers-Baby/zgbs/baby-products/ref=zg_bs_nav_0

@@ -247,7 +247,7 @@ def extract_subcategory_url(url_prefix="https://www.amazon.com"):
     '''
     with open("URL_sub_categories.txt", "r") as f:
         all_lines = f.readlines()
-        URLs = [line.split(":", 1)[1].strip() for line in all_lines]
+        URLs = [line.split(":", 1)[1].strip() for line in all_lines if not line.startswith("#")]
 
     list_sub_urls = []
     for URL in URLs:
