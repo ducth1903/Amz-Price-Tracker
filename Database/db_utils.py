@@ -144,3 +144,7 @@ def alert_user_email(product_asin, product_name, new_product_price, last_product
 
 def alert_admin_tracker(failed_URLs, total_URLs):
     email_msg_utils.admin_alert(failed_URLs, total_URLs)
+
+########################## DB Close ##########################
+def db_close():
+    db.session.close()

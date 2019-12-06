@@ -33,7 +33,7 @@ def remove_product(product_asin):
     delete_product(product_asin)
 
 sys.path.append(os.path.join(my_dir, r"../Scraper"))
-from Scraper.main_tracker import price_tracker_job
+from Scraper.main_tracker_multithreading import price_tracker_job
 @click.command(name="main_tracker")
 @with_appcontext
 def main_tracker():

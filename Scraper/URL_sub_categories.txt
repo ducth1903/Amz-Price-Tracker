@@ -7,3 +7,5 @@ Data Storage: https://www.amazon.com/Best-Sellers-Electronics-Data-Storage/zgbs/
 Electronics: https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics/ref=zg_bs_unv_e_1_1292115011_2
 Automotive: https://www.amazon.com/Best-Sellers-Automotive/zgbs/automotive/ref=zg_bs_nav_0
 Beauty & Personal Care: https://www.amazon.com/Best-Sellers-Beauty/zgbs/beauty/ref=zg_bs_nav_0
+Kitchen & Dining: https://www.amazon.com/Best-Sellers-Kitchen-Dining/zgbs/kitchen/ref=zg_bs_nav_0
+Baby: https://www.amazon.com/Best-Sellers-Baby/zgbs/baby-products/ref=zg_bs_nav_0

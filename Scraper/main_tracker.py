@@ -16,9 +16,10 @@ sys.path.append(file_path.database_dir)
 import db_utils
 
 def price_tracker_job():
+    t_start = time.perf_counter()
     # Get list of URLs for all products from the table
     URLs = [url_set[0] for url_set in db_utils.get_all_products()]
-    total_URLs, failed_URLs = len(URLs), []
+    failed_URLs = []
     
     for URL in tqdm(URLs):
         # Request HTML response from the page and extract info from it
@@ -37,8 +38,9 @@ def price_tracker_job():
         if is_price_change(list_prices):
             db_utils.alert_user_email(details["ASIN"], details["name"], details["price"], list_prices[-2])
     
+    t_end = time.perf_counter()
     db_utils.alert_admin_tracker(failed_URLs, URLs)
-    print("...finish tracking at {} ...".format(datetime.now()))
+    print("...finish tracking at {}, in {} seconds ...".format(datetime.now(), t_end-t_start))
 
 def is_price_change(list_prices):
     return True if list_prices[-1] != list_prices[-2] else False

@@ -114,4 +114,9 @@ Other better solution is to move the long-time tasks to background process
 - <a href="https://devcenter.heroku.com/articles/request-timeout">Request timeout</a>
 - <a href="https://devcenter.heroku.com/articles/python-rq">Background Tasks in Python with Redis Queue (RQ)</a>
 
- 
+---
+
+RegEx:
+
+- Match anything before "http://": **.*(?=http://)**
+
