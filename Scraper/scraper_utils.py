@@ -187,7 +187,7 @@ def extract_amazon_url(URL):
             curr_prod = ProductAmz(soup)
         except:
             ''' Valid Amazon URL but probably not a specific product '''
-            print("Valid Amazon URL but probably not a specific product... ", URL)
+            print("Valid Amazon URL but error in scraping... ", URL)
             return None
         
         details["ASIN"] = ASIN
@@ -266,7 +266,6 @@ def extract_subcategory_url(url_prefix="https://www.amazon.com"):
         for curr_sub_url in list_sub_urls: f.write(curr_sub_url+"\n")
 
 if __name__ == "__main__":
-    '''
     import time
     start_time = time.time()
     # test_url = "https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/1999579518"
@@ -281,10 +280,11 @@ if __name__ == "__main__":
     # test_url = "https://www.amazon.com/Acer-V227Q-21-5-Monitor-Display/dp/B07KKLSLKY/ref=pd_ybh_a_2?_encoding=UTF8&psc=1&refRID=TVGVYJ772A6D9QE4TP6E"
     # test_url = "https://www.amazon.com/dp/B07VTK654B/ref=s9_acsd_al_bw_c2_x_1_t?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-2&pf_rd_r=87W6Q3D5J5SCWRP0BAR2&pf_rd_t=101&pf_rd_p=61bdadab-c5b6-413d-b733-e6aa22c94614&pf_rd_i=9818047011&th=1"
     test_url = "https://www.amazon.com/Hydro-Flask-Double-Insulated-Stainless/dp/B01GW2GH4M?pf_rd_p=c4a36063-ed31-585b-b9d3-e14ee41d7e8c&pf_rd_r=NQFBVEK3ETWZZG8AXESZ&pd_rd_wg=eQKGe&ref_=pd_gw_ri&pd_rd_w=A7mml&pd_rd_r=9a366c83-5373-429f-8491-702c0f919b95"
+    test_url = "https://www.amazon.com/Instant-Pot-Duo-Mini-Programmable/dp/B06Y1YD5W7/ref=zg_bs_kitchen_1/143-5372776-3808125?_encoding=UTF8&psc=1&refRID=NBPVNKHQ25RSNHY4XW7N"
     extracted_info = extract_amazon_url(test_url)
     end_time = time.time()
     print(extracted_info)
     print('Scraping takes {} sec'.format(end_time-start_time))
     # print(helper_get_ASIN_from_URL(test_url, getTrimmedURL=True))
-    '''
-    extract_subcategory_url()
+    
+    # extract_subcategory_url()
