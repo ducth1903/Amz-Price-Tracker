@@ -112,6 +112,8 @@ Update (11/22/2019): Since Gmail SMTP usually has some errors, it is better to u
 Other better solution is to move the long-time tasks to background process
 
 - <a href="https://devcenter.heroku.com/articles/request-timeout">Request timeout</a>
+- [Scheduled Jobs and Custom Clock Processes](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes)
+- [Scheduled Jobs with Custom Clock Processes in Python with APScheduler](https://devcenter.heroku.com/articles/clock-processes-python)
 - <a href="https://devcenter.heroku.com/articles/python-rq">Background Tasks in Python with Redis Queue (RQ)</a>
 
 ---

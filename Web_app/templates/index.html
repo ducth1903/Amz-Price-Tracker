@@ -185,6 +185,12 @@ $(document).ready(function() {
         data[idx]['price'] = val;
     }
     
+    // need to sort data by datetime
+    function custom_sort(first, second) {
+        return first['datetime'].getTime() - second['datetime'].getTime()
+    }
+    data.sort(custom_sort);
+
     // Set latest-price
     document.getElementById("latest-price").innerHTML = data[data.length-1]['price'];
 
