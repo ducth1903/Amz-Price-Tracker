@@ -1,4 +1,6 @@
 import requests
+# import urllib
+# from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import sys
 import json
@@ -160,34 +162,33 @@ def extract_amazon_url(URL):
         # Trim URL by removing unnecessary parts (i.e. /ref...)  
         ASIN, trimmed_URL = helper_get_ASIN_from_URL(URL, getTrimmedURL=True)
 
-        page = requests.get(trimmed_URL, headers=headers)
-        print(f"Page response with {page.status_code}!")
-        
-        # ''' page.status_code should be 200 (valid page); 503 means CAPTCHA'''
-        if page.status_code==200:
-            # VALID RESPONSE
-            pass
-        elif page.status_code==404:
-            # INVALID URL
-            # raise Exception("The requested page is not valid...")
-            return None
-        elif page.status_code==503:
-            # CAPTCHA RESPONSE
-            proxies = get_proxies(country_code="US")                
+        try:
+            page = requests.get(trimmed_URL, headers=headers)
+            # page = urlopen(trimmed_URL)
+            print(f"Page response with {page.status_code}!")
+        except Exception as e:
+            # CAPTCHA RESPONSE or # INVALID URL
+            isValidResponse = False
+            proxies = get_proxies(num_proxies=10, country_code="US")
             for proxy in proxies:
                 try:
                     page = requests.get(trimmed_URL, headers=headers, proxies={"https" : proxy, "http" : proxy}, timeout=1)
                 except:
                     continue
                 if page.status_code == 200:
-                    break            
+                    isValidResponse = True
+                    break
+            
+            if not isValidResponse:
+                print(f'Error in extract_amazon_url() for {URL}... {e}')
+                return None
 
         soup = BeautifulSoup(page.content, "lxml")
         try:
             curr_prod = ProductAmz(soup)
-        except:
+        except Exception as e:
             ''' Valid Amazon URL but probably not a specific product '''
-            print("Valid Amazon URL but error in scraping... ", URL)
+            print(f"Valid Amazon URL but error in extracting {URL}... {e}")
             return None
         
         details["ASIN"] = ASIN
@@ -235,9 +236,9 @@ def get_proxies(num_proxies=100, country_code=None):
     proxy_table = proxy_soup.find("table", {"id": "proxylisttable"}).select("tbody")[0]
     proxy_table_rows = proxy_table.findAll("tr")
     if country_code:
-        list_proxies = ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies) if proxy_table_rows[i].findAll("td")[2]==country_code]
+        list_proxies = ["http://{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies) if proxy_table_rows[i].findAll("td")[2].text==country_code]
     else:
-        list_proxies = ["{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies)]
+        list_proxies = ["http://{0}:{1}".format(proxy_table_rows[i].findAll("td")[0].text, proxy_table_rows[i].findAll("td")[1].text) for i in range(num_proxies)]
     return list_proxies
 
 def extract_subcategory_url(url_prefix="https://www.amazon.com"):

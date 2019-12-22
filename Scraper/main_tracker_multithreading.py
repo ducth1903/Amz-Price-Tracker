@@ -16,7 +16,11 @@ import file_path
 sys.path.append(file_path.database_dir)
 import db_utils
 
+WAIT_TIME = 3               # wait time in sec between scraping
+
 def track_url(URL):
+    time.sleep(WAIT_TIME)
+
     # Request HTML response from the page and extract info from it
     details = scraper_utils.extract_amazon_url(URL)
     if not details:
